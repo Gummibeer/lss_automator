@@ -93,7 +93,7 @@
     }
 
     function handleMissionDelete(id) {
-        console.log('finish mission (' + id + ') - '.$('#navigation_top').text());
+        console.log('finish mission (' + id + ') - '+$('#navigation_top').text());
         delete missions[id];
     }
 })();
