@@ -21,3 +21,11 @@
         console.log(message);
     }
 })();
+
+$(window).load(function(){
+    console.log('window.load');
+});
+
+$(document).ready(function(){
+    console.log('document.ready');
+});
