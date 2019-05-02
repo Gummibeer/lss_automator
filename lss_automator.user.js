@@ -7,7 +7,7 @@
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
-// @grant       none
+// @grant       GM_getResourceText
 // @resource    VehicleMap https://github.com/Gummibeer/lss_automator/raw/master/vehicle.map.json
 // @resource    MissionMap https://github.com/Gummibeer/lss_automator/raw/master/mission.map.json
 // ==/UserScript==
@@ -87,7 +87,7 @@
 
                 clearInterval(tableInterval);
 
-                for(let vehicleType in Object.keys(missionVehicles.vehicles)) {
+                for(let vehicleType in Object.keys(missionVehicles)) {
                     let vehicleCount = missionVehicles[vehicleType];
 
                     for (let i = 0; i < vehicleCount; i++) {
