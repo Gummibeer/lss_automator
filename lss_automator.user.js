@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.13
+// @version     0.1.14
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -15,6 +15,8 @@
 (function () {
     const VEHICLE_MAP = JSON.parse(GM_getResourceText('VehicleMap'));
     const MISSION_MAP = JSON.parse(GM_getResourceText('MissionMap'));
+
+    let starting_mission = false;
 
     if (window.location.href !== 'https://www.leitstellenspiel.de/') {
         return;
@@ -64,10 +66,18 @@
     }
 
     function startMission(missionId, missionTypeId) {
+        if (starting_mission) {
+            setTimeout(startMission, 1000, missionId, missionTypeId);
+            return;
+        }
+
+        starting_mission = true;
+
         let missionVehicles = MISSION_MAP[missionTypeId];
 
         if (typeof missionVehicles === 'undefined') {
             console.error('mission details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
+            starting_mission = false;
             return;
         }
 
@@ -79,6 +89,8 @@
             buttonIntervalRuns++;
             if (buttonIntervalRuns > 10) {
                 clearInterval(buttonInterval);
+                console.error('alarm button not found');
+                starting_mission = false;
                 return;
             }
 
@@ -96,6 +108,8 @@
                 tableIntervallRuns++;
                 if (tableIntervallRuns > 10) {
                     clearInterval(tableInterval);
+                    console.error('vehicle table not found');
+                    starting_mission = false;
                     return;
                 }
 
@@ -123,6 +137,7 @@
 
                         if ($trs.length === 0) {
                             console.error('not enough vehicles - missing: ' + vehicleType);
+                            starting_mission = false;
                             return;
                         }
 
@@ -135,6 +150,7 @@
                 $('form#mission-form', $iframe.contents()).submit();
 
                 $('#lightbox_box button#lightbox_close').trigger('click');
+                starting_mission = false;
             }, 500);
         }, 500);
     }
