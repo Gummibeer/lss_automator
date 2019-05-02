@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.6
+// @version     0.1.7
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -53,7 +53,6 @@
         console.debug(MISSION_DATA[mission.mtid]);
 
         let $button = $('#alarm_button_'+mission.id);
-        console.debug($button);
         if ($button.length !== 1) {
             console.error('mission alert button nut found');
             return;
@@ -62,17 +61,19 @@
         $button.trigger('click');
 
         let tableInterval = setInterval(function() {
-            let $table = $('#vehicle_show_table_all');
-            console.debug($table);
-            if($table.length !== 1) {
+            let $iframe = $('iframe.lightbox_iframe').first();
+            let $table = $('table#vehicle_show_table_all', $iframe.contents());
+            if ($table.length !== 1) {
                 return;
             }
 
             clearInterval(tableInterval);
 
-            $table.find('tr').first().find('input[type=checkbox].vehicle_checkbox').trigger('click');
+            $table.find('tbody').find('tr').first().find('input[type=checkbox].vehicle_checkbox').prop('checked', true);
 
-            $('form#mission-form').submit();
+            $('form#mission-form', $iframe.contents()).submit();
+
+            $('#lightbox_box button#lightbox_close').trigger('click');
         }, 500);
     }
 
