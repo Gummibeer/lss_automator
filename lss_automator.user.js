@@ -3,14 +3,14 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.8
+// @version     0.1.9
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
 // @grant       none
 // ==/UserScript==
 
-(function() {
+(function () {
     const MISSION_DATA = {
         1: {
             vehicles: {
@@ -25,16 +25,16 @@
 
     console.info('init LSS-Automator');
 
-    const subscription = faye.subscribe('/private-user'+user_id+'de', handleFayeEvent );
+    const subscription = faye.subscribe('/private-user' + user_id + 'de', handleFayeEvent);
 
     let missions = {};
 
     function handleFayeEvent(message) {
-        if(message.indexOf('missionMarkerAdd') === 0) {
+        if (message.indexOf('missionMarkerAdd') === 0) {
             console.log(message);
             let body = JSON.parse(message.replace('missionMarkerAdd(', '').replace(');', '').trim());
             handleMissionMarkerAdd(body);
-        } else if(message.indexOf('missionDelete') === 0) {
+        } else if (message.indexOf('missionDelete') === 0) {
             console.log(message);
             let body = JSON.parse(message.replace('missionDelete(', '').replace(');', '').trim());
             handleMissionDelete(body);
@@ -49,18 +49,18 @@
         }
 
         missions[mission.id] = mission;
-        console.log('start mission "'+mission.caption+'" ('+mission.id+')');
+        console.log('start mission "' + mission.caption + '" (' + mission.id + ')');
         console.debug(MISSION_DATA[mission.mtid]);
 
         let buttonIntervalRuns = 0;
-        let buttonInterval = setInterval(function() {
+        let buttonInterval = setInterval(function () {
             buttonIntervalRuns++;
             if (buttonIntervalRuns > 10) {
                 clearInterval(buttonInterval);
                 return;
             }
 
-            let $button = $('#alarm_button_'+mission.id);
+            let $button = $('#alarm_button_' + mission.id);
             if ($button.length !== 1) {
                 return;
             }
@@ -70,7 +70,7 @@
             $button.trigger('click');
 
             let tableIntervallRuns = 0;
-            let tableInterval = setInterval(function() {
+            let tableInterval = setInterval(function () {
                 tableIntervallRuns++;
                 if (tableIntervallRuns > 10) {
                     clearInterval(tableInterval);
@@ -95,7 +95,11 @@
     }
 
     function handleMissionDelete(id) {
-        console.log('finish mission "'+missions[id].caption+'" ('+id+')');
+        if (typeof missions[id] === 'undefined') {
+            return;
+        }
+
+        console.log('finish mission "' + missions[id].caption + '" (' + id + ')');
         delete missions[id];
     }
 })();
