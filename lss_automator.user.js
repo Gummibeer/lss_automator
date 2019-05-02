@@ -15,18 +15,29 @@
         return;
     }
 
-    console.log('init LSS-Automator');
+    console.info('init LSS-Automator');
 
     const subscription = faye.subscribe('/private-user'+user_id+'de', handleFayeEvent );
 
     function handleFayeEvent(message) {
-        if(!(
-            message.indexOf('missionMarkerAdd') === 0
-            || message.indexOf('missionDelete') === 0
-        )) {
-            return;
+        if(message.indexOf('missionMarkerAdd') === 0) {
+            console.log(message);
+            let body = JSON.parse(message.replace('missionMarkerAdd(', '').replace(');', '').trim());
+            handleMissionMarkerAdd(body);
+        } else if(message.indexOf('missionDelete') === 0) {
+            console.log(message);
+            let body = JSON.parse(message.replace('missionDelete(', '').replace(');', '').trim());
+            handleMissionDelete(body);
+        } else {
+            console.debug(message);
         }
+    }
 
-        console.log(message);
+    function handleMissionMarkerAdd(body) {
+        console.debug(body);
+    }
+
+    function handleMissionDelete(id) {
+        console.debug(id);
     }
 })();
