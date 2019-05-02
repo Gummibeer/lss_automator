@@ -50,7 +50,7 @@
 
         missions[mission.id] = mission;
         console.log('start mission "'+mission.caption+'" ('+mission.id+')');
-        console.debug(MISSION_DATA[mission.mtid] ?? null);
+        console.debug(MISSION_DATA[mission.mtid]);
 
         let $button = $('#alarm_button_'+mission.id);
         console.debug($button);
