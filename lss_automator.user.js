@@ -30,16 +30,14 @@
     let missions = {};
 
     function handleFayeEvent(message) {
+        console.debug(message);
+
         if (message.indexOf('missionMarkerAdd') === 0) {
-            console.log(message);
             let body = JSON.parse(message.replace('missionMarkerAdd(', '').replace(');', '').trim());
             handleMissionMarkerAdd(body);
         } else if (message.indexOf('missionDelete') === 0) {
-            console.log(message);
             let body = JSON.parse(message.replace('missionDelete(', '').replace(');', '').trim());
             handleMissionDelete(body);
-        } else {
-            console.debug(message);
         }
     }
 
