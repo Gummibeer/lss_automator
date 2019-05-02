@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.7
+// @version     0.1.8
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -52,7 +52,14 @@
         console.log('start mission "'+mission.caption+'" ('+mission.id+')');
         console.debug(MISSION_DATA[mission.mtid]);
 
+        let buttonIntervalRuns = 0;
         let buttonInterval = setInterval(function() {
+            buttonIntervalRuns++;
+            if (buttonIntervalRuns > 10) {
+                clearInterval(buttonInterval);
+                return;
+            }
+
             let $button = $('#alarm_button_'+mission.id);
             if ($button.length !== 1) {
                 return;
@@ -62,7 +69,14 @@
 
             $button.trigger('click');
 
+            let tableIntervallRuns = 0;
             let tableInterval = setInterval(function() {
+                tableIntervallRuns++;
+                if (tableIntervallRuns > 10) {
+                    clearInterval(tableInterval);
+                    return;
+                }
+
                 let $iframe = $('iframe.lightbox_iframe').first();
                 let $table = $('table#vehicle_show_table_all', $iframe.contents());
                 if ($table.length !== 1) {
