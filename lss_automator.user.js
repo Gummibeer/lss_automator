@@ -93,11 +93,7 @@
     }
 
     function handleMissionDelete(id) {
-        if (typeof missions[id] === 'undefined') {
-            return;
-        }
-
-        console.log('finish mission "' + missions[id].caption + '" (' + id + ')');
+        console.log('finish mission (' + id + ') - '.$('#navigation_top').text());
         delete missions[id];
     }
 })();
