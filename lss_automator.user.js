@@ -5,8 +5,6 @@
 // @version     0.1.3
 // @author      Gummibeer
 // @grant       none
-// @updateURL   https://raw.githubusercontent.com/Gummibeer/lss_automator/master/lss_automator.user.js
-// @downloadURL https://raw.githubusercontent.com/Gummibeer/lss_automator/master/lss_automator.user.js
 // ==/UserScript==
 
 (function() {
