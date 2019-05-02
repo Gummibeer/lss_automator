@@ -52,28 +52,31 @@
         console.log('start mission "'+mission.caption+'" ('+mission.id+')');
         console.debug(MISSION_DATA[mission.mtid]);
 
-        let $button = $('#alarm_button_'+mission.id);
-        if ($button.length !== 1) {
-            console.error('mission alert button nut found');
-            return;
-        }
-
-        $button.trigger('click');
-
-        let tableInterval = setInterval(function() {
-            let $iframe = $('iframe.lightbox_iframe').first();
-            let $table = $('table#vehicle_show_table_all', $iframe.contents());
-            if ($table.length !== 1) {
+        let buttonInterval = setInterval(function() {
+            let $button = $('#alarm_button_'+mission.id);
+            if ($button.length !== 1) {
                 return;
             }
 
-            clearInterval(tableInterval);
+            clearInterval(buttonInterval);
 
-            $table.find('tbody').find('tr').first().find('input[type=checkbox].vehicle_checkbox').prop('checked', true);
+            $button.trigger('click');
 
-            $('form#mission-form', $iframe.contents()).submit();
+            let tableInterval = setInterval(function() {
+                let $iframe = $('iframe.lightbox_iframe').first();
+                let $table = $('table#vehicle_show_table_all', $iframe.contents());
+                if ($table.length !== 1) {
+                    return;
+                }
 
-            $('#lightbox_box button#lightbox_close').trigger('click');
+                clearInterval(tableInterval);
+
+                $table.find('tbody').find('tr').first().find('input[type=checkbox].vehicle_checkbox').prop('checked', true);
+
+                $('form#mission-form', $iframe.contents()).submit();
+
+                $('#lightbox_box button#lightbox_close').trigger('click');
+            }, 500);
         }, 500);
     }
 
