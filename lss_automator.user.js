@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.12
+// @version     0.1.13
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -21,6 +21,19 @@
     }
 
     console.info('init LSS-Automator');
+
+    let $missions = $('#mission_list').find('div').filter(function () {
+        let $this = $(this);
+
+        return $this.find('.mission_panel_red').length === 1;
+    });
+
+    if ($missions.length > 0) {
+        $missions.each(function () {
+            let $mission = $(this);
+            startMission($mission.attr('mission_id'), $mission.attr('mission_type_id'));
+        });
+    }
 
     const subscription = faye.subscribe('/private-user' + user_id + 'de', handleFayeEvent);
 
@@ -43,15 +56,22 @@
             return;
         }
 
-        missions[mission.id] = mission;
-        let missionVehicles = MISSION_MAP[mission.mtid];
+        startMission(mission.id, mission.mtid);
+    }
+
+    function handleMissionDelete(id) {
+        console.log('finish mission#' + id);
+    }
+
+    function startMission(missionId, missionTypeId) {
+        let missionVehicles = MISSION_MAP[missionTypeId];
 
         if (typeof missionVehicles === 'undefined') {
-            console.error('mission details for type#' + mission.mtid + ' not found https://www.leitstellenspiel.de/einsaetze/' + mission.mtid);
+            console.error('mission details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
             return;
         }
 
-        console.log('start mission "' + mission.caption + '" (' + mission.id + ')');
+        console.log('start mission#' + missionId);
         console.debug(missionVehicles);
 
         let buttonIntervalRuns = 0;
@@ -62,7 +82,7 @@
                 return;
             }
 
-            let $button = $('#alarm_button_' + mission.id);
+            let $button = $('#alarm_button_' + missionId);
             if ($button.length !== 1) {
                 return;
             }
@@ -87,7 +107,7 @@
 
                 clearInterval(tableInterval);
 
-                for(let vehicleType in Object.keys(missionVehicles)) {
+                for (let vehicleType in Object.keys(missionVehicles)) {
                     let vehicleCount = missionVehicles[vehicleType];
 
                     for (let i = 0; i < vehicleCount; i++) {
@@ -102,7 +122,7 @@
                         });
 
                         if ($trs.length === 0) {
-                            console.error('not enough vehicles - missing: '+vehicleType);
+                            console.error('not enough vehicles - missing: ' + vehicleType);
                             return;
                         }
 
@@ -117,10 +137,5 @@
                 $('#lightbox_box button#lightbox_close').trigger('click');
             }, 500);
         }, 500);
-    }
-
-    function handleMissionDelete(id) {
-        console.log('finish mission (' + id + ') - ' + $('#navigation_top').text());
-        delete missions[id];
     }
 })();
