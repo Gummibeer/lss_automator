@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.17
+// @version     0.1.18
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -40,8 +40,6 @@
     const subscription = faye.subscribe('/private-user' + user_id + 'de', handleFayeEvent);
 
     function handleFayeEvent(message) {
-        // console.debug(message);
-
         if (message.indexOf('missionMarkerAdd') === 0) {
             let body = JSON.parse(message.replace('missionMarkerAdd(', '').replace(');', '').trim());
             handleMissionMarkerAdd(body);
@@ -91,9 +89,10 @@
             let $countdown = $mission.find('.mission_overview_countdown');
             if ($countdown.length === 1) {
                 let timeout = parseInt($countdown.attr('timeleft'));
-                if (timeout > 0) {
+                let startBefore = 1000 * 60 * 5;
+                if (timeout > (startBefore + (1000 * 60))) {
                     console.log('delay mission#' + missionId + ' by ' + timeout + 'ms');
-                    setTimeout(startMission, timeout, missionId, missionTypeId);
+                    setTimeout(startMission, timeout - startBefore, missionId, missionTypeId);
                     starting_mission = false;
                     return;
                 }
