@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.20
+// @version     0.1.21
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -25,9 +25,7 @@
     console.info('init LSS-Automator');
 
     let $missions = $('#mission_list').add('#mission_list_sicherheitswache').find('div[mission_id]:not(.mission_deleted)').filter(function () {
-        let $this = $(this);
-
-        return $this.find('.mission_panel_red').length === 1;
+        return $(this).find('.mission_panel_red').length === 1;
     });
 
     if ($missions.length > 0) {
@@ -58,7 +56,7 @@
     }
 
     function handleMissionDelete(id) {
-        console.log('finish mission#' + id);
+        console.log('mission#' + id+' finished');
     }
 
     function startMission(missionId, missionTypeId) {
@@ -74,7 +72,7 @@
             missionIntervalRuns++;
             if (missionIntervalRuns > 10) {
                 clearInterval(missionInterval);
-                console.error('mission not found');
+                console.error('mission#'+missionId+' not found');
                 starting_mission = false;
                 return;
             }
@@ -86,12 +84,18 @@
 
             clearInterval(missionInterval);
 
+            if ($mission.hasClass('mission_deleted') || $mission.find('.mission_panel_red').length === 0) {
+                console.error('mission#'+missionId+' already started');
+                starting_mission = false;
+                return;
+            }
+
             let $countdown = $mission.find('.mission_overview_countdown');
             if ($countdown.length === 1) {
                 let timeout = parseInt($countdown.attr('timeleft'));
                 let startBefore = 1000 * 60 * 10;
                 if (timeout > (startBefore + (1000 * 60))) {
-                    console.log('delay mission#' + missionId + ' by ' + timeout + 'ms');
+                    console.log('mission#' + missionId + ' delay by ' + timeout + 'ms');
                     setTimeout(startMission, timeout - startBefore, missionId, missionTypeId);
                     starting_mission = false;
                     return;
@@ -107,7 +111,7 @@
 
             let missionVehicles = missionDetails.vehicles;
 
-            console.log('start mission#' + missionId);
+            console.log('mission#' + missionId+' starting');
 
             let buttonIntervalRuns = 0;
             let buttonInterval = setInterval(function () {
