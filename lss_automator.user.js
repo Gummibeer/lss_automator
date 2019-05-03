@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.21
+// @version     0.1.22
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -24,7 +24,7 @@
 
     console.info('init LSS-Automator');
 
-    let $missions = $('#mission_list').add('#mission_list_sicherheitswache').find('div[mission_id]:not(.mission_deleted)').filter(function () {
+    let $missions = $('#mission_list').find('div[mission_id]:not(.mission_deleted)').filter(function () {
         return $(this).find('.mission_panel_red').length === 1;
     });
 
@@ -95,8 +95,7 @@
                 let timeout = parseInt($countdown.attr('timeleft'));
                 let startBefore = 1000 * 60 * 10;
                 if (timeout > (startBefore + (1000 * 60))) {
-                    console.log('mission#' + missionId + ' delay by ' + timeout + 'ms');
-                    setTimeout(startMission, timeout - startBefore, missionId, missionTypeId);
+                    console.log('mission#' + missionId + ' with countdown ignored');
                     starting_mission = false;
                     return;
                 }
