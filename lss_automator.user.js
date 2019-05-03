@@ -104,7 +104,7 @@
 
             let missionDetails = MISSION_MAP[missionTypeId];
             if (typeof missionDetails === 'undefined') {
-                console.error('mission details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
+                console.error('mission#'+missionId+' details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
                 starting_mission = false;
                 return;
             }
@@ -150,7 +150,7 @@
                     let $tab = $('.tab-content .tab-pane.active', $iframe.contents());
                     let $alert = $tab.find('.alert');
                     if ($alert.length === 1) {
-                        console.error('no vehicles available');
+                        console.error('mission#'+missionId+' no vehicles available');
                         setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
                         $('#lightbox_box button#lightbox_close').trigger('click');
                         starting_mission = false;
@@ -182,7 +182,7 @@
                             });
 
                             if ($trs.length === 0) {
-                                console.error('not enough vehicles - missing: ' + vehicleType);
+                                console.error('mission#'+missionId+' not enough vehicles - missing: ' + vehicleType);
                                 setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
                                 $('#lightbox_box button#lightbox_close').trigger('click');
                                 starting_mission = false;
