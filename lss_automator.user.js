@@ -89,7 +89,7 @@
             let $countdown = $mission.find('.mission_overview_countdown');
             if ($countdown.length === 1) {
                 let timeout = parseInt($countdown.attr('timeleft'));
-                let startBefore = 1000 * 60 * 5;
+                let startBefore = 1000 * 60 * 10;
                 if (timeout > (startBefore + (1000 * 60))) {
                     console.log('delay mission#' + missionId + ' by ' + timeout + 'ms');
                     setTimeout(startMission, timeout - startBefore, missionId, missionTypeId);
