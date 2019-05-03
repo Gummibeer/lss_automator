@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.19
+// @version     0.1.20
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -41,10 +41,10 @@
 
     function handleFayeEvent(message) {
         if (message.indexOf('missionMarkerAdd') === 0) {
-            let body = JSON.parse(message.replace('missionMarkerAdd(', '').replace(');', '').trim());
+            let body = JSON.parse(message.split(');')[0].replace('missionMarkerAdd(', '').replace(');', '').trim());
             handleMissionMarkerAdd(body);
         } else if (message.indexOf('missionDelete') === 0) {
-            let body = JSON.parse(message.replace('missionDelete(', '').replace(');', '').trim());
+            let body = JSON.parse(message.split(');')[0].replace('missionDelete(', '').replace(');', '').trim());
             handleMissionDelete(body);
         }
     }
