@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.15
+// @version     0.1.16
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -103,18 +103,27 @@
 
             $button.trigger('click');
 
-            let tableIntervallRuns = 0;
+            let tableIntervalRuns = 0;
             let tableInterval = setInterval(function () {
-                tableIntervallRuns++;
-                if (tableIntervallRuns > 10) {
-                    clearInterval(tableInterval);
+                tableIntervalRuns++;
+                if (tableIntervalRuns > 10) {
                     console.error('vehicle table not found');
                     starting_mission = false;
+                    clearInterval(tableInterval);
                     return;
                 }
 
                 let $iframe = $('iframe.lightbox_iframe').first();
-                let $table = $('table#vehicle_show_table_all', $iframe.contents());
+                let $tab = $('.tab-content .tab-pane.active', $iframe.contents());
+                let $alert = $tab.find('.alert');
+                if ($alert.length === 1) {
+                    console.error('no vehicles available');
+                    starting_mission = false;
+                    clearInterval(tableInterval);
+                    return;
+                }
+
+                let $table = $tab.find('table#vehicle_show_table_all');
                 if ($table.length !== 1) {
                     return;
                 }
