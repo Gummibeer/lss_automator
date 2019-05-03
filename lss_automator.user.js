@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name        Script für Leitstellenspiel
+// @name        Leitstellenspiel Automator
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.14
+// @version     0.1.15
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -24,7 +24,7 @@
 
     console.info('init LSS-Automator');
 
-    let $missions = $('#mission_list').find('div').filter(function () {
+    let $missions = $('#mission_list').find('div[mission_id]:not(.mission_deleted)').filter(function () {
         let $this = $(this);
 
         return $this.find('.mission_panel_red').length === 1;
