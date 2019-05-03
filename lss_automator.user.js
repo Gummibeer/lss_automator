@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.18
+// @version     0.1.19
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -98,13 +98,14 @@
                 }
             }
 
-            let missionVehicles = MISSION_MAP[missionTypeId];
-
-            if (typeof missionVehicles === 'undefined') {
+            let missionDetails = MISSION_MAP[missionTypeId];
+            if (typeof missionDetails === 'undefined') {
                 console.error('mission details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
                 starting_mission = false;
                 return;
             }
+
+            let missionVehicles = missionDetails.vehicles;
 
             console.log('start mission#' + missionId);
 
@@ -137,7 +138,7 @@
                         return;
                     }
 
-                    let $iframe = $('iframe.lightbox_iframe[src="/missions/'+missionId+'"]').first();
+                    let $iframe = $('iframe.lightbox_iframe[src="/missions/' + missionId + '"]').first();
                     if ($iframe.length !== 1) {
                         return;
                     }
@@ -146,6 +147,8 @@
                     let $alert = $tab.find('.alert');
                     if ($alert.length === 1) {
                         console.error('no vehicles available');
+                        setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
+                        $('#lightbox_box button#lightbox_close').trigger('click');
                         starting_mission = false;
                         clearInterval(tableInterval);
                         return;
@@ -158,7 +161,7 @@
 
                     clearInterval(tableInterval);
 
-                    for(let j = 0; j < Object.keys(missionVehicles).length; j++) {
+                    for (let j = 0; j < Object.keys(missionVehicles).length; j++) {
                         let vehicleType = Object.keys(missionVehicles)[j];
                         let vehicleCount = missionVehicles[vehicleType];
                         console.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType);
@@ -176,6 +179,8 @@
 
                             if ($trs.length === 0) {
                                 console.error('not enough vehicles - missing: ' + vehicleType);
+                                setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
+                                $('#lightbox_box button#lightbox_close').trigger('click');
                                 starting_mission = false;
                                 return;
                             }

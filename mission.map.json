@@ -1,188 +1,380 @@
 {
   "0": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Mülleimerbrand"
   },
   "1": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Containerbrand"
   },
   "2": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender PKW"
   },
   "3": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Motorrad-Brand"
   },
   "4": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennendes Gras"
   },
   "5": {
-    "LF": 2,
-    "DLK": 1
+    "vehicles": {
+      "LF": 2,
+      "DLK": 1
+    },
+    "caption": "Zimmerbrand"
   },
   "6": {
-    "LF": 2
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Gartenlaubenbrand"
   },
   "7": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennendes Laub"
   },
   "8": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Sperrmüllbrand"
   },
   "9": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Strohballen Brand"
   },
   "10": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Traktor Brand"
   },
   "11": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennende Telefonzelle"
   },
   "12": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Baum auf Straße"
   },
   "13": {
-    "LF": 2
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Brennender LKW"
   },
   "14": {
-    "LF": 2
+    "water": 2000,
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Kleiner Feldbrand"
   },
   "15": {
-    "LF": 1
+    "water": 800,
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Kleiner Waldbrand"
   },
   "16": {
-    "LF": 2
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Wohnwagenbrand"
   },
   "17": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brand in Briefkasten"
   },
   "18": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennendes Gebüsch"
   },
   "19": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Anhänger"
   },
   "31": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Auslaufende Betriebsstoffe"
   },
   "37": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Mülleimerbrand"
   },
   "38": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Mülleimerbrand"
   },
   "39": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Mülleimerbrand"
   },
   "40": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Mülleimerbrand"
   },
   "52": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brand auf Weihnachtsmarkt"
   },
   "76": {
-    "LF": 2
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Küchenbrand"
   },
   "78": {
-    "LF": 1,
-    "DLK": 1
+    "vehicles": {
+      "LF": 1,
+      "DLK": 1
+    },
+    "caption": "Kleintier in Not"
   },
   "88": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Bollerwagen"
   },
   "94": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Kleine Ölspur"
   },
   "111": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennende Vogelscheuche"
+  },
+  "138": {
+    "water": 3000,
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Flächenbrand"
   },
   "142": {
-    "LF": 2,
-    "DLK": 1
+    "vehicles": {
+      "LF": 2,
+      "DLK": 1
+    },
+    "caption": "Feuer auf Balkon"
   },
   "143": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennende Papiercontainer"
   },
   "144": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennende Hecke"
   },
   "159": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Äste auf Fahrbahn"
   },
   "160": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Umherfliegendes Baumaterial"
   },
   "191": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Baum auf Radweg"
   },
   "216": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Bollerwagen"
   },
   "217": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Bollerwagen"
   },
   "218": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Bollerwagen"
   },
   "219": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Bollerwagen"
   },
   "220": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Bollerwagen"
   },
   "230": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Feuerprobealarm an Schule"
   },
   "259": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender PKW durch Feuerwerkskörper"
   },
   "260": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Sperrmüllbrand durch Feuerwerkskörper"
   },
   "265": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennende Papiercontainer durch Feuerwerkskörper"
   },
   "266": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennende Hecke durch Feuerwerkskörper"
   },
   "277": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Person im Aufzug"
   },
   "288": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennendes Osternest"
   },
   "289": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Schokoladenspur auf Strasse"
   },
   "318": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Ausgelöster Heimrauchmelder"
   },
   "349": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brandgeruch"
   },
   "360": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Blumenstrauß"
   },
   "361": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Blumenstrauß"
   },
   "362": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Blumenstrauß"
   },
   "363": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Blumenstrauß"
   },
   "364": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Blumenstrauß"
   },
   "365": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Blumenstrauß"
   },
   "371": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Fußball aufpumpen"
   },
   "375": {
-    "LF": 1
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Tor gefallen"
   },
   "384": {
-    "LF": 2
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Brennende Ballenpresse"
   }
 }
