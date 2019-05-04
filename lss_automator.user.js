@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.25
+// @version     0.1.26
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -110,11 +110,14 @@
                 return;
             }
 
+            logger.info('mission#' + missionId + ' starting');
+
             let missionVehicles = missionDetails.vehicles;
             let missionWater = typeof missionDetails.water === 'undefined' ? 0 : missionDetails.water;
 
-            logger.info('mission#' + missionId + ' starting');
-            logger.debug('mission#' + missionId + ' require ' + missionWater + 'l water');
+            if (missionWater > 0) {
+                logger.debug('mission#' + missionId + ' require ' + missionWater + 'l water');
+            }
 
             let buttonIntervalRuns = 0;
             let buttonInterval = setInterval(function () {
