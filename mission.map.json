@@ -138,6 +138,12 @@
     },
     "caption": "Dachstuhlbrand"
   },
+  "23": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Fettbrand in Pommesbude"
+  },
   "31": {
     "vehicles": {
       "LF": 1
