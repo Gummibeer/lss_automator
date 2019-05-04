@@ -301,6 +301,12 @@
     },
     "caption": "Kleine Ölspur"
   },
+  "96": {
+    "vehicles": {
+      "LF": 3
+    },
+    "caption": "Feuer in Schnellrestaurant"
+  },
   "102": {
     "vehicles": {
       "LF": 3,
