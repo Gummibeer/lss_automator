@@ -299,6 +299,12 @@
     },
     "caption": "Umherfliegendes Baumaterial"
   },
+  "189": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Verkehrsbehinderung"
+  },
   "191": {
     "vehicles": {
       "LF": 1
@@ -472,5 +478,12 @@
       "FUSTW": 1
     },
     "caption": "Absicherung Pannen-LKW"
+  },
+  "436": {
+    "vehicles": {
+      "LF": 1,
+      "FUSTW": 1
+    },
+    "caption": "Verschmutzte Fahrbahn"
   }
 }
