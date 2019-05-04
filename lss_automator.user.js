@@ -26,6 +26,18 @@
 
     logger.notice('initialize LSS-Automator');
 
+    $.get('https://www.leitstellenspiel.de/einsaetze/leitstelle/-1', function (html) {
+        let availableMissionIds = [];
+        $(html).filter('table.table').find('tbody').find('tr.success').each(function () {
+            availableMissionIds.push($(this).find('a').attr('href').replace('/einsaetze/', ''));
+        });
+
+        let undefinedMissionIds = availableMissionIds.filter(i => Object.keys(MISSION_MAP).indexOf(i) === -1);
+        if (undefinedMissionIds.length > 0) {
+            logger.warning('active but undefined mission type ids: ' + undefinedMissionIds.join(', '));
+        }
+    });
+
     let $missions = $('#mission_list').find('div[mission_id]:not(.mission_deleted)').filter(function () {
         return $(this).find('.mission_panel_red').length === 1;
     });
