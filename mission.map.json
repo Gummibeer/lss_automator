@@ -158,11 +158,29 @@
     },
     "caption": "Brand auf Weihnachtsmarkt"
   },
+  "60": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Ladendiebstahl"
+  },
   "63": {
     "vehicles": {
       "FUSTW": 1
     },
     "caption": "Parkendes Auto gerammt"
+  },
+  "64": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Metalldiebstahl"
+  },
+  "69": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Personalienaufnahme von Schwarzfahrer"
   },
   "76": {
     "vehicles": {
@@ -220,6 +238,18 @@
       "LF": 1
     },
     "caption": "Brennende Hecke"
+  },
+  "145": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Trunkenheitsfahrt"
+  },
+  "148": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Ampelausfall"
   },
   "149": {
     "vehicles": {
@@ -280,6 +310,12 @@
       "LF": 1
     },
     "caption": "Feuerprobealarm an Schule"
+  },
+  "241": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Wildunfall"
   },
   "259": {
     "vehicles": {
@@ -394,5 +430,11 @@
       "LF": 2
     },
     "caption": "Brennende Ballenpresse"
+  },
+  "418": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Absicherung Pannen-LKW"
   }
 }
