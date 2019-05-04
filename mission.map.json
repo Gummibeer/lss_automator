@@ -164,6 +164,12 @@
     },
     "caption": "Ladendiebstahl"
   },
+  "61": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Ladendiebstahl"
+  },
   "62": {
     "vehicles": {
       "FUSTW": 1
@@ -182,6 +188,18 @@
     },
     "caption": "Metalldiebstahl"
   },
+  "65": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Taschendiebstahl"
+  },
+  "66": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Notebook aus Schule entwendet"
+  },
   "67": {
     "vehicles": {
       "FUSTW": 1
@@ -195,6 +213,12 @@
     "caption": "Personalienaufnahme von Schwarzfahrer"
   },
   "69": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Personalienaufnahme von Schwarzfahrer"
+  },
+  "70": {
     "vehicles": {
       "FUSTW": 1
     },
@@ -225,11 +249,29 @@
     },
     "caption": "Einbruch in Keller"
   },
+  "82": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Einbruch in Wohnung"
+  },
+  "85": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Sachbeschädigung"
+  },
   "88": {
     "vehicles": {
       "LF": 1
     },
     "caption": "Brennender Bollerwagen"
+  },
+  "90": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Ruhestörung"
   },
   "94": {
     "vehicles": {
@@ -242,6 +284,38 @@
       "LF": 1
     },
     "caption": "Brennende Vogelscheuche"
+  },
+  "112": {
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Brennendes Kürbisfeld"
+  },
+  "117": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Kürbisse geklaut"
+  },
+  "119": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Süßigkeitendiebstahl"
+  },
+  "122": {
+    "vehicles": {
+      "LF": 1,
+      "FUSTW": 1
+    },
+    "caption": "Motorradunfall"
+  },
+  "128": {
+    "vehicles": {
+      "LF": 1,
+      "FUSTW": 1
+    },
+    "caption": "Auffahrunfall"
   },
   "138": {
     "water": 3000,
@@ -287,6 +361,18 @@
     },
     "caption": "Pannenfahrzeug"
   },
+  "150": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Hausfriedensbruch"
+  },
+  "153": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Hilflose Person"
+  },
   "159": {
     "vehicles": {
       "LF": 1
@@ -305,11 +391,23 @@
     },
     "caption": "Verkehrsbehinderung"
   },
+  "190": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Diebstahl aus Kfz"
+  },
   "191": {
     "vehicles": {
       "LF": 1
     },
     "caption": "Baum auf Radweg"
+  },
+  "203": {
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Brennende Weihnachtsmarktbude"
   },
   "209": {
     "vehicles": {
@@ -371,6 +469,19 @@
     },
     "caption": "Sperrmüllbrand durch Feuerwerkskörper"
   },
+  "261": {
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Kleiner Feldbrand durch Feuerwerkskörper"
+  },
+  "264": {
+    "vehicles": {
+      "LF": 2,
+      "DLK": 1
+    },
+    "caption": "Feuer auf Balkon durch Feuerwerkskörper"
+  },
   "265": {
     "vehicles": {
       "LF": 1
@@ -383,11 +494,41 @@
     },
     "caption": "Brennende Hecke durch Feuerwerkskörper"
   },
+  "267": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Trunkenheitsfahrt nach Silvesterparty"
+  },
+  "269": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Kfz durch Feuerwerkskörper beschädigt"
+  },
+  "270": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Verstoß gegen Sprengstoffverordnung"
+  },
   "277": {
     "vehicles": {
       "LF": 1
     },
     "caption": "Person im Aufzug"
+  },
+  "284": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Ostereier-Dieb"
+  },
+  "285": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Pinsel aus Werkstatt entwendet"
   },
   "288": {
     "vehicles": {
@@ -400,6 +541,12 @@
       "LF": 1
     },
     "caption": "Schokoladenspur auf Strasse"
+  },
+  "290": {
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Eierkocherbrand"
   },
   "308": {
     "vehicles": {
@@ -461,6 +608,12 @@
     },
     "caption": "Fußball aufpumpen"
   },
+  "372": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Mannschaftsbus in Halteverbot abgestellt"
+  },
   "375": {
     "vehicles": {
       "LF": 1
@@ -478,6 +631,12 @@
       "FUSTW": 1
     },
     "caption": "Absicherung Pannen-LKW"
+  },
+  "422": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Sachbeschädigung an PKW"
   },
   "436": {
     "vehicles": {
