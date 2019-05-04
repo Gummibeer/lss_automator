@@ -176,7 +176,6 @@
                         logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType);
 
                         for (let i = 0; i < vehicleCount; i++) {
-                            // $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]')
                             let $trs = $table.find('tbody').find('tr').filter(function () {
                                 let $tr = $(this);
 
