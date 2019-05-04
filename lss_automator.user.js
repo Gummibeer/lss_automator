@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.27
+// @version     0.1.28
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -184,6 +184,7 @@
                     clearInterval(tableInterval);
 
                     let vehiclesWater = 0;
+                    let sentVehicles = [];
 
                     for (let j = 0; j < Object.keys(missionVehicles).length; j++) {
                         let vehicleType = Object.keys(missionVehicles)[j];
@@ -210,6 +211,7 @@
                             }
 
                             let $checkbox = $trs.first().find('input[type=checkbox].vehicle_checkbox');
+                            sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
                             vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : $checkbox.attr('wasser_amount');
                             $checkbox.prop('checked', true);
                         }
@@ -225,10 +227,13 @@
                                 starting_mission = false;
                             }
                             let $checkbox = $checkboxes.first();
+                            sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
                             vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : $checkbox.attr('wasser_amount');
                             $checkbox.prop('checked', true);
                         }
                     }
+
+                    logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', '));
 
                     $('form#mission-form', $iframe.contents()).submit();
 
