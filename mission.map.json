@@ -122,6 +122,13 @@
     },
     "caption": "Brennender Anhänger"
   },
+  "20": {
+    "vehicles": {
+      "LF": 3,
+      "ELW1": 1
+    },
+    "caption": "Kellerbrand"
+  },
   "21": {
     "vehicles": {
       "LF": 1,
@@ -143,6 +150,18 @@
       "LF": 1
     },
     "caption": "Fettbrand in Pommesbude"
+  },
+  "24": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennendes Bus-Häuschen"
+  },
+  "25": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Verkehrsunfall"
   },
   "31": {
     "vehicles": {
@@ -603,6 +622,14 @@
       "LF": 2
     },
     "caption": "Eierkocherbrand"
+  },
+  "303": {
+    "vehicles": {
+      "LF": 2,
+      "DLK": 1,
+      "ELW1": 1
+    },
+    "caption": "Carportbrand"
   },
   "308": {
     "vehicles": {
