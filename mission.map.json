@@ -215,6 +215,12 @@
     },
     "caption": "Brennende Hecke"
   },
+  "149": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Pannenfahrzeug"
+  },
   "159": {
     "vehicles": {
       "LF": 1
@@ -310,6 +316,12 @@
       "LF": 1
     },
     "caption": "Schokoladenspur auf Strasse"
+  },
+  "308": {
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Brennender Müllwagen"
   },
   "318": {
     "vehicles": {
