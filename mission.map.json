@@ -158,6 +158,12 @@
     },
     "caption": "Brand auf Weihnachtsmarkt"
   },
+  "63": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Parkendes Auto gerammt"
+  },
   "76": {
     "vehicles": {
       "LF": 2
