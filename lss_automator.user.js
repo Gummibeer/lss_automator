@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.26
+// @version     0.1.27
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -204,12 +204,17 @@
                     }
 
                     if (vehiclesWater < missionWater) {
-                        let $tr = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)');
-                        if ($tr.length === 0) {
-                            logger.error('mission#' + missionId + ' not enough water in available vehicles');
-                            setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
-                            $('#lightbox_box button#lightbox_close').trigger('click');
-                            starting_mission = false;
+                        while(vehiclesWater < missionWater) {
+                            let $checkboxes = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)');
+                            if ($checkboxes.length === 0) {
+                                logger.error('mission#' + missionId + ' not enough water in available vehicles');
+                                setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
+                                $('#lightbox_box button#lightbox_close').trigger('click');
+                                starting_mission = false;
+                            }
+                            let $checkbox = $checkboxes.first();
+                            vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : $checkbox.attr('wasser_amount');
+                            $checkbox.prop('checked', true);
                         }
                     }
 
