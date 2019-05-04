@@ -164,6 +164,12 @@
     },
     "caption": "Ladendiebstahl"
   },
+  "62": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Parkendes Auto gerammt"
+  },
   "63": {
     "vehicles": {
       "FUSTW": 1
@@ -176,11 +182,29 @@
     },
     "caption": "Metalldiebstahl"
   },
+  "67": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Personalienaufnahme von Schwarzfahrer"
+  },
+  "68": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Personalienaufnahme von Schwarzfahrer"
+  },
   "69": {
     "vehicles": {
       "FUSTW": 1
     },
     "caption": "Personalienaufnahme von Schwarzfahrer"
+  },
+  "71": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Parkendes Auto gerammt"
   },
   "76": {
     "vehicles": {
@@ -194,6 +218,12 @@
       "DLK": 1
     },
     "caption": "Kleintier in Not"
+  },
+  "81": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Einbruch in Keller"
   },
   "88": {
     "vehicles": {
@@ -274,6 +304,12 @@
       "LF": 1
     },
     "caption": "Baum auf Radweg"
+  },
+  "209": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Fahrraddiebstahl"
   },
   "216": {
     "vehicles": {

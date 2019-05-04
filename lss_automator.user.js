@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.23
+// @version     0.1.24
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -105,7 +105,7 @@
 
             let missionDetails = MISSION_MAP[missionTypeId];
             if (typeof missionDetails === 'undefined') {
-                logger.error('mission#'+missionId+' details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
+                logger.critical('mission#'+missionId+' details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
                 starting_mission = false;
                 return;
             }
