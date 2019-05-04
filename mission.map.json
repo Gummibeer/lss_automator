@@ -122,6 +122,22 @@
     },
     "caption": "Brennender Anhänger"
   },
+  "21": {
+    "vehicles": {
+      "LF": 1,
+      "DLK": 1,
+      "ELW1": 1
+    },
+    "caption": "Schornsteinbrand"
+  },
+  "22": {
+    "vehicles": {
+      "LF": 3,
+      "DLK": 1,
+      "ELW1": 1
+    },
+    "caption": "Dachstuhlbrand"
+  },
   "31": {
     "vehicles": {
       "LF": 1
@@ -279,6 +295,14 @@
     },
     "caption": "Kleine Ölspur"
   },
+  "102": {
+    "vehicles": {
+      "LF": 3,
+      "DLK": 1,
+      "ELW1": 1
+    },
+    "caption": "Feuer in Einfamilienhaus"
+  },
   "111": {
     "vehicles": {
       "LF": 1
@@ -384,6 +408,12 @@
       "LF": 1
     },
     "caption": "Umherfliegendes Baumaterial"
+  },
+  "161": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Baum auf PKW"
   },
   "189": {
     "vehicles": {
