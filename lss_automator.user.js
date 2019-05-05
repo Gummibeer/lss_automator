@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.29
+// @version     0.1.30
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -217,31 +217,29 @@
 
                             let $checkbox = $trs.first().find('input[type=checkbox].vehicle_checkbox');
                             sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
-                            vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : $checkbox.attr('wasser_amount');
+                            vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : parseInt($checkbox.attr('wasser_amount'));
                             $checkbox.prop('checked', true);
                         }
                     }
 
-                    if (vehiclesWater < missionWater) {
-                        while (vehiclesWater < missionWater) {
-                            let $checkboxes = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)');
-                            if ($checkboxes.length === 0) {
-                                logger.error('mission#' + missionId + ' not enough water in available vehicles');
-                                setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
-                                $('#lightbox_box button#lightbox_close').trigger('click');
-                                starting_mission = false;
-                            }
-                            let $checkbox = $checkboxes.first();
-                            sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
-                            vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : $checkbox.attr('wasser_amount');
-                            $checkbox.prop('checked', true);
+                    while (vehiclesWater < missionWater) {
+                        console.debug('mission#' + missionId + ' not enough water in vehicles - missing: ' + (missionWater - vehiclesWater) + 'l');
+                        let $checkbox = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)').first();
+                        if ($checkbox.length === 0) {
+                            logger.error('mission#' + missionId + ' not enough water in available vehicles');
+                            setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
+                            $('#lightbox_box button#lightbox_close').trigger('click');
+                            starting_mission = false;
+                            break;
                         }
+                        sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
+                        vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : parseInt($checkbox.attr('wasser_amount'));
+                        $checkbox.prop('checked', true);
                     }
 
-                    logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', '));
+                    logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', ') + (vehiclesWater > 0 ? (' with ' + vehiclesWater + 'l water') : ''));
 
                     $('form#mission-form', $iframe.contents()).submit();
-
                     $('#lightbox_box button#lightbox_close').trigger('click');
                     starting_mission = false;
                 }, 500);
