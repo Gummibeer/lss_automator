@@ -1,19 +1,48 @@
 {
-  "LF": [
-    "KLF",
-    "LF 10",
-    "LF 20"
-  ],
-  "DLK": [
-    "DLK 23"
-  ],
-  "RW": [
-    "RW"
-  ],
-  "ELW1": [
-    "ELW 1"
-  ],
-  "FUSTW": [
-    "FuStW"
-  ]
+  "LF": {
+    "building_requirements": null,
+    "vehicle_types": [
+      "KLF",
+      "LF 10",
+      "LF 20"
+    ]
+  },
+  "DLK": {
+    "building_requirements": {
+      "fire": 3
+    },
+    "vehicle_types": [
+      "DLK 23"
+    ]
+  },
+  "RW": {
+    "building_requirements": {
+      "fire": 4
+    },
+    "vehicle_types": [
+      "RW"
+    ]
+  },
+  "ELW1": {
+    "building_requirements": {
+      "fire": 6
+    },
+    "vehicle_types": [
+      "ELW 1"
+    ]
+  },
+  "SW": {
+    "building_requirements": {
+      "fire": 7
+    },
+    "vehicle_types": [
+      "SW Kats"
+    ]
+  },
+  "FUSTW": {
+    "building_requirements": {},
+    "vehicle_types": [
+      "FuStW"
+    ]
+  }
 }

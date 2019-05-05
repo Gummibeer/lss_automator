@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.31
+// @version     0.1.32
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -13,18 +13,32 @@
 // @require     https://github.com/Gummibeer/lss_automator/raw/master/logger.js
 // ==/UserScript==
 
+Array.prototype.toUpperCase = function () {
+    this.map(Function.prototype.call, String.prototype.toUpperCase);
+};
+
 (function () {
-    const VEHICLE_MAP = JSON.parse(GM_getResourceText('VehicleMap'));
-    const MISSION_MAP = JSON.parse(GM_getResourceText('MissionMap'));
-    const logger = new Logger('lss-automator', Logger.DEBUG);
-
-    let starting_mission = false;
-
     if (window.location.href !== 'https://www.leitstellenspiel.de/') {
         return;
     }
+    const logger = new Logger('lss-automator', Logger.DEBUG);
 
     logger.notice('initialize LSS-Automator');
+
+    const VEHICLE_MAP = JSON.parse(GM_getResourceText('VehicleMap'));
+    const MISSION_MAP = JSON.parse(GM_getResourceText('MissionMap'));
+    const BUILDINGS = {
+        fire: 0,
+    };
+    $.getJSON('https://www.leitstellenspiel.de/api/buildings', function (data) {
+        data.forEach(function (building) {
+            if (building.building_type === 0) {
+                BUILDINGS.fire++;
+            }
+        });
+    });
+
+    let starting_mission = false;
 
     setTimeout(function () {
         logger.notice('reload window');
@@ -53,6 +67,20 @@
             startMission($mission.attr('mission_id'), $mission.attr('mission_type_id'));
         });
     }
+
+    const missionListMutationObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            console.log(mutation);
+        });
+    });
+    missionListMutationObserver.observe(document.getElementById('mission_list'), {
+        attributes: false,
+        characterData: false,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: false,
+    });
 
     const subscription = faye.subscribe('/private-user' + user_id + 'de', handleFayeEvent);
 
@@ -195,14 +223,20 @@
 
                     for (let j = 0; j < Object.keys(missionVehicles).length; j++) {
                         let vehicleType = Object.keys(missionVehicles)[j];
+                        let VehicleTypes = VEHICLE_MAP[vehicleType].vehicle_types.toUpperCase();
+                        let buildingRequirements = VEHICLE_MAP[vehicleType].building_requirements;
+                        let isOptionalVehicle = false;
+                        Object.keys(buildingRequirements).forEach(function (building_type) {
+                            isOptionalVehicle = BUILDINGS[building_type] < buildingRequirements[building_type] ? true : isOptionalVehicle;
+                        });
                         let vehicleCount = missionVehicles[vehicleType];
-                        logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType);
+                        logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType + (isOptionalVehicle ? '(optional)' : ''));
 
                         for (let i = 0; i < vehicleCount; i++) {
                             let $trs = $table.find('tbody').find('tr').filter(function () {
                                 let $tr = $(this);
 
-                                if (VEHICLE_MAP[vehicleType].indexOf($tr.attr('vehicle_type')) === -1) {
+                                if (VehicleTypes.indexOf($tr.attr('vehicle_type').toUpperCase()) === -1) {
                                     return false;
                                 }
 
@@ -210,11 +244,16 @@
                             });
 
                             if ($trs.length === 0) {
-                                logger.error('mission#' + missionId + ' not enough vehicles - missing: ' + vehicleType);
-                                setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
-                                $('#lightbox_box button#lightbox_close').trigger('click');
-                                starting_mission = false;
-                                return;
+                                if (isOptionalVehicle) {
+                                    logger.warning('mission#' + missionId + ' not enough optional vehicles - missing: ' + vehicleType);
+                                    break;
+                                } else {
+                                    logger.error('mission#' + missionId + ' not enough vehicles - missing: ' + vehicleType);
+                                    setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
+                                    $('#lightbox_box button#lightbox_close').trigger('click');
+                                    starting_mission = false;
+                                    return;
+                                }
                             }
 
                             let $checkbox = $trs.first().find('input[type=checkbox].vehicle_checkbox');
