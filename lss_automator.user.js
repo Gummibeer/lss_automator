@@ -223,7 +223,7 @@
                     }
 
                     while (vehiclesWater < missionWater) {
-                        console.debug('mission#' + missionId + ' not enough water in vehicles - missing: ' + (missionWater - vehiclesWater) + 'l');
+                        logger.debug('mission#' + missionId + ' not enough water in vehicles - missing: ' + (missionWater - vehiclesWater) + 'l');
                         let $checkbox = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)').first();
                         if ($checkbox.length === 0) {
                             logger.error('mission#' + missionId + ' not enough water in available vehicles');
