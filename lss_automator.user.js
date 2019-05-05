@@ -31,18 +31,6 @@
         window.location.reload();
     }, 1000 * 60 * 60);
 
-    setInterval(function () {
-        $.ajax({
-            url: 'https://www.leitstellenspiel.de/mission-generate',
-            cache: false,
-            error: function (e) {
-                if (e.status === 401) {
-                    window.location.reload();
-                }
-            }
-        });
-    }, 1000 * 60 * 2);
-
     $.get('https://www.leitstellenspiel.de/einsaetze/leitstelle/-1', function (html) {
         let availableMissionIds = [];
         $(html).filter('table.table').find('tbody').find('tr.success').each(function () {
