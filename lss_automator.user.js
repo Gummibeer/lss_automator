@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.32
+// @version     0.1.33
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -14,7 +14,7 @@
 // ==/UserScript==
 
 Array.prototype.toUpperCase = function () {
-    this.map(Function.prototype.call, String.prototype.toUpperCase);
+    return this.map(Function.prototype.call, String.prototype.toUpperCase);
 };
 
 (function () {
@@ -67,20 +67,6 @@ Array.prototype.toUpperCase = function () {
             startMission($mission.attr('mission_id'), $mission.attr('mission_type_id'));
         });
     }
-
-    const missionListMutationObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            console.log(mutation);
-        });
-    });
-    missionListMutationObserver.observe(document.getElementById('mission_list'), {
-        attributes: false,
-        characterData: false,
-        childList: true,
-        subtree: true,
-        attributeOldValue: false,
-        characterDataOldValue: false,
-    });
 
     const subscription = faye.subscribe('/private-user' + user_id + 'de', handleFayeEvent);
 
@@ -223,20 +209,20 @@ Array.prototype.toUpperCase = function () {
 
                     for (let j = 0; j < Object.keys(missionVehicles).length; j++) {
                         let vehicleType = Object.keys(missionVehicles)[j];
-                        let VehicleTypes = VEHICLE_MAP[vehicleType].vehicle_types.toUpperCase();
+                        let vehicleTypes = VEHICLE_MAP[vehicleType].vehicle_types.toUpperCase();
                         let buildingRequirements = VEHICLE_MAP[vehicleType].building_requirements;
                         let isOptionalVehicle = false;
                         Object.keys(buildingRequirements).forEach(function (building_type) {
                             isOptionalVehicle = BUILDINGS[building_type] < buildingRequirements[building_type] ? true : isOptionalVehicle;
                         });
                         let vehicleCount = missionVehicles[vehicleType];
-                        logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType + (isOptionalVehicle ? '(optional)' : ''));
+                        logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType + (isOptionalVehicle ? ' (optional)' : ''));
 
                         for (let i = 0; i < vehicleCount; i++) {
                             let $trs = $table.find('tbody').find('tr').filter(function () {
                                 let $tr = $(this);
 
-                                if (VehicleTypes.indexOf($tr.attr('vehicle_type').toUpperCase()) === -1) {
+                                if (vehicleTypes.indexOf($tr.attr('vehicle_type').toUpperCase()) === -1) {
                                     return false;
                                 }
 
