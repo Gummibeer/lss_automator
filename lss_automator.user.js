@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.28
+// @version     0.1.29
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -25,6 +25,23 @@
     }
 
     logger.notice('initialize LSS-Automator');
+
+    setTimeout(function () {
+        logger.notice('reload window');
+        window.location.reload();
+    }, 1000 * 60 * 60);
+
+    setInterval(function () {
+        $.ajax({
+            url: 'https://www.leitstellenspiel.de/mission-generate',
+            cache: false,
+            error: function (e) {
+                if (e.status === 401) {
+                    window.location.reload();
+                }
+            }
+        });
+    }, 1000 * 60 * 2);
 
     $.get('https://www.leitstellenspiel.de/einsaetze/leitstelle/-1', function (html) {
         let availableMissionIds = [];
@@ -218,7 +235,7 @@
                     }
 
                     if (vehiclesWater < missionWater) {
-                        while(vehiclesWater < missionWater) {
+                        while (vehiclesWater < missionWater) {
                             let $checkboxes = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)');
                             if ($checkboxes.length === 0) {
                                 logger.error('mission#' + missionId + ' not enough water in available vehicles');
