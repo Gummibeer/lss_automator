@@ -51,7 +51,7 @@ class Logger {
 
     static get STYLES() {
         return {
-            [this.FAYE]: 'color: #A9A9A9',
+            [this.FAYE]: 'color: #B9B9B9',
             [this.DEBUG]: 'color: #999999',
             [this.INFO]: 'color: #212121',
             [this.NOTICE]: 'color: #325A85',
