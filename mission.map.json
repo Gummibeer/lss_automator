@@ -163,6 +163,32 @@
     },
     "caption": "Verkehrsunfall"
   },
+  "26": {
+    "vehicles": {
+      "LF": 3,
+      "RW": 1,
+      "ELW1": 1,
+      "ELW2": 1,
+      "DLK": 1
+
+    },
+    "caption": "Brand im Supermarkt"
+  },
+  "27": {
+    "vehicles": {
+      "LF": 1,
+      "RW": 1
+
+    },
+    "caption": "Auffahrunfall"
+  },
+  "28": {
+    "vehicles": {
+      "LF": 2
+
+    },
+    "caption": "Garagenbrand"
+  },
   "31": {
     "vehicles": {
       "LF": 1
