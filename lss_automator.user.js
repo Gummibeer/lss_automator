@@ -16,7 +16,7 @@
 (function () {
     const VEHICLE_MAP = JSON.parse(GM_getResourceText('VehicleMap'));
     const MISSION_MAP = JSON.parse(GM_getResourceText('MissionMap'));
-    const logger = new Logger('lss-automator', Logger.FAYE);
+    const logger = new Logger('lss-automator', Logger.DEBUG);
 
     let starting_mission = false;
 
