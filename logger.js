@@ -1,4 +1,8 @@
 class Logger {
+    static get FAYE() {
+        return 0;
+    };
+
     static get DEBUG() {
         return 100;
     };
@@ -33,6 +37,7 @@ class Logger {
 
     static get LEVELS() {
         return {
+            'faye': this.FAYE,
             'debug': this.DEBUG,
             'info': this.INFO,
             'notice': this.NOTICE,
@@ -46,7 +51,8 @@ class Logger {
 
     static get STYLES() {
         return {
-            [this.DEBUG]: 'color: #9A9A9A',
+            [this.FAYE]: 'color: #A9A9A9',
+            [this.DEBUG]: 'color: #999999',
             [this.INFO]: 'color: #212121',
             [this.NOTICE]: 'color: #325A85',
             [this.WARNING]: 'color: #7A6223',
@@ -59,6 +65,7 @@ class Logger {
 
     static get METHODS() {
         return {
+            [this.FAYE]: console.debug ? 'debug' : 'log',
             [this.DEBUG]: console.debug ? 'debug' : 'log',
             [this.INFO]: console.info ? 'info' : 'log',
             [this.NOTICE]: console.info ? 'info' : 'log',
@@ -88,6 +95,10 @@ class Logger {
         let method = Logger.METHODS[level];
 
         console[method]('%c' + this._formatter.call(this, level, message), Logger.STYLES[level]);
+    }
+
+    faye(message) {
+        this.log(Logger.FAYE, message);
     }
 
     debug(message) {

@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.30
+// @version     0.1.31
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -16,7 +16,7 @@
 (function () {
     const VEHICLE_MAP = JSON.parse(GM_getResourceText('VehicleMap'));
     const MISSION_MAP = JSON.parse(GM_getResourceText('MissionMap'));
-    const logger = new Logger('lss-automator', Logger.DEBUG);
+    const logger = new Logger('lss-automator', Logger.FAYE);
 
     let starting_mission = false;
 
@@ -57,6 +57,8 @@
     const subscription = faye.subscribe('/private-user' + user_id + 'de', handleFayeEvent);
 
     function handleFayeEvent(message) {
+        logger.faye(message);
+
         if (message.indexOf('missionMarkerAdd') === 0) {
             let body = JSON.parse(message.split(');')[0].replace('missionMarkerAdd(', '').replace(');', '').trim());
             handleMissionMarkerAdd(body);
