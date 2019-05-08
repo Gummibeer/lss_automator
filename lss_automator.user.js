@@ -11,7 +11,19 @@
 // @resource    VehicleMap https://github.com/Gummibeer/lss_automator/raw/master/vehicle.map.json
 // @resource    MissionMap https://github.com/Gummibeer/lss_automator/raw/master/mission.map.json
 // @require     https://github.com/Gummibeer/lss_automator/raw/master/logger.js
+// @require     https://github.com/Gummibeer/lss_automator/raw/master/wait_for_element.js
 // ==/UserScript==
+
+/**
+ * @typedef {Object} MissionDetail
+ * @property {string} caption
+ * @property {number} [water=0]
+ * @property {Object.<string, number>} vehicles
+ *
+ * @typedef {Object} VehicleDetail
+ * @property {Object.<string, number>} building_requirements
+ * @property {Object.<string, number>} vehicle_types
+ */
 
 Array.prototype.toUpperCase = function () {
     return this.map(Function.prototype.call, String.prototype.toUpperCase);
@@ -25,7 +37,9 @@ Array.prototype.toUpperCase = function () {
 
     logger.notice('initialize LSS-Automator');
 
+    /** @type {Object.<string, VehicleDetail>} */
     const VEHICLE_MAP = JSON.parse(GM_getResourceText('VehicleMap'));
+    /** @type {MissionDetail[]} */
     const MISSION_MAP = JSON.parse(GM_getResourceText('MissionMap'));
     const BUILDINGS = {
         fire: 0,
@@ -94,6 +108,23 @@ Array.prototype.toUpperCase = function () {
         logger.info('mission#' + id + ' finished');
     }
 
+    function stoppingMission(missionId, missionTypeId) {
+        if(
+            typeof missionId !== 'undefined'
+            && typeof missionTypeId !== 'undefined'
+        ) {
+            setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
+        }
+
+
+        let $lightboxClose = $('#lightbox_box button#lightbox_close');
+        if($lightboxClose.length === 1) {
+            $lightboxClose.trigger('click');
+        }
+
+        starting_mission = false;
+    }
+
     function startMission(missionId, missionTypeId) {
         if (starting_mission) {
             setTimeout(startMission, 1000, missionId, missionTypeId);
@@ -102,175 +133,130 @@ Array.prototype.toUpperCase = function () {
 
         starting_mission = true;
 
-        let missionIntervalRuns = 0;
-        let missionInterval = setInterval(function () {
-            missionIntervalRuns++;
-            if (missionIntervalRuns > 10) {
-                clearInterval(missionInterval);
-                logger.error('mission#' + missionId + ' not found');
-                starting_mission = false;
-                return;
-            }
-
-            let $mission = $('#mission_' + missionId);
-            if ($mission.length !== 1) {
-                return;
-            }
-
-            clearInterval(missionInterval);
-
-            if ($mission.hasClass('mission_deleted') || $mission.find('.mission_panel_red').length === 0) {
-                logger.warning('mission#' + missionId + ' already started');
-                starting_mission = false;
-                return;
-            }
-
-            let $countdown = $mission.find('.mission_overview_countdown');
-            if ($countdown.length === 1) {
-                let timeout = parseInt($countdown.attr('timeleft'));
-                let startBefore = 1000 * 60 * 10;
-                if (timeout > (startBefore + (1000 * 60))) {
-                    logger.warning('mission#' + missionId + ' with countdown ignored');
-                    starting_mission = false;
-                    return;
+        waitForElement('#mission_' + missionId)
+            .then(function($mission) {
+                if ($mission.hasClass('mission_deleted')) {
+                    logger.warning('mission#' + missionId + ' already finished');
+                    return stoppingMission();
                 }
-            }
-
-            let missionDetails = MISSION_MAP[missionTypeId];
-            if (typeof missionDetails === 'undefined') {
-                logger.critical('mission#' + missionId + ' details for type#' + missionTypeId + ' not found https://www.leitstellenspiel.de/einsaetze/' + missionTypeId);
-                starting_mission = false;
-                return;
-            }
-
-            logger.info('mission#' + missionId + ' starting');
-
-            let missionVehicles = missionDetails.vehicles;
-            let missionWater = typeof missionDetails.water === 'undefined' ? 0 : missionDetails.water;
-
-            if (missionWater > 0) {
-                logger.debug('mission#' + missionId + ' require ' + missionWater + 'l water');
-            }
-
-            let buttonIntervalRuns = 0;
-            let buttonInterval = setInterval(function () {
-                buttonIntervalRuns++;
-                if (buttonIntervalRuns > 10) {
-                    clearInterval(buttonInterval);
-                    logger.critical('alarm button not found');
-                    starting_mission = false;
-                    return;
+                if ($mission.find('.mission_panel_red').length === 0) {
+                    logger.warning('mission#' + missionId + ' already started');
+                    return stoppingMission();
                 }
 
-                let $button = $('#alarm_button_' + missionId);
-                if ($button.length !== 1) {
-                    return;
+                let missionDetails = MISSION_MAP[missionTypeId];
+                if (typeof missionDetails === 'undefined') {
+                    logger.critical('mission#' + missionId + ' details for type#' + missionTypeId + ' not found');
+                    return stoppingMission();
                 }
 
-                clearInterval(buttonInterval);
+                logger.info('mission#' + missionId + ' starting');
 
-                $button.trigger('click');
+                missionDetails.water = typeof missionDetails.water === 'undefined' ? 0 : missionDetails.water;
 
-                let tableIntervalRuns = 0;
-                let tableInterval = setInterval(function () {
-                    tableIntervalRuns++;
-                    if (tableIntervalRuns > 10) {
-                        logger.critical('vehicle table not found');
-                        starting_mission = false;
-                        clearInterval(tableInterval);
-                        return;
-                    }
+                if (missionDetails.water > 0) {
+                    logger.debug('mission#' + missionId + ' require ' + missionDetails.water + 'l water');
+                }
 
-                    let $iframe = $('iframe.lightbox_iframe[src="/missions/' + missionId + '"]').first();
-                    if ($iframe.length !== 1) {
-                        return;
-                    }
+                waitForElement('#alarm_button_' + missionId)
+                    .then(function($button) {
+                        $button.trigger('click');
 
-                    let $tab = $('.tab-content .tab-pane.active', $iframe.contents());
-                    let $alert = $tab.find('.alert');
-                    if ($alert.length === 1) {
-                        logger.error('mission#' + missionId + ' no vehicles available');
-                        setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
-                        $('#lightbox_box button#lightbox_close').trigger('click');
-                        starting_mission = false;
-                        clearInterval(tableInterval);
-                        return;
-                    }
+                        waitForElement('iframe.lightbox_iframe[src="/missions/' + missionId + '"]')
+                            .then(function($iframe) {
+                                waitForElement('.tab-content .tab-pane.active', $iframe.contents())
+                                    .then(function($tab) {
+                                        let $alert = $tab.find('.alert');
+                                        let $table = $tab.find('table#vehicle_show_table_all');
+                                        if (
+                                            $alert.length === 1
+                                            || $table.length === 0
+                                        ) {
+                                            logger.error('mission#' + missionId + ' no vehicles available');
+                                            return stoppingMission(missionId, missionTypeId);
+                                        }
 
-                    let $table = $tab.find('table#vehicle_show_table_all');
-                    if ($table.length !== 1) {
-                        return;
-                    }
+                                        let vehiclesWater = 0;
+                                        let sentVehicles = [];
+                                        function sendVehicle($checkbox) {
+                                            sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
+                                            vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : parseInt($checkbox.attr('wasser_amount'));
+                                            $checkbox.prop('checked', true);
+                                        }
 
-                    clearInterval(tableInterval);
+                                        for (let j = 0; j < Object.keys(missionDetails.vehicles).length; j++) {
+                                            let vehicleType = Object.keys(missionDetails.vehicles)[j];
+                                            let vehicleTypes = Object.keys(VEHICLE_MAP[vehicleType].vehicle_types).toUpperCase();
+                                            let vehicleTypeIds = Object.values(VEHICLE_MAP[vehicleType].vehicle_types);
+                                            let buildingRequirements = VEHICLE_MAP[vehicleType].building_requirements;
+                                            let isOptionalVehicle = false;
+                                            Object.keys(buildingRequirements).forEach(function (building_type) {
+                                                isOptionalVehicle = BUILDINGS[building_type] < buildingRequirements[building_type] ? true : isOptionalVehicle;
+                                            });
+                                            let vehicleCount = missionDetails.vehicles[vehicleType];
+                                            logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType + (isOptionalVehicle ? ' (optional)' : ''));
 
-                    let vehiclesWater = 0;
-                    let sentVehicles = [];
+                                            for (let i = 0; i < vehicleCount; i++) {
+                                                let $trs = $table.find('tbody').find('tr').filter(function () {
+                                                    let $tr = $(this);
 
-                    for (let j = 0; j < Object.keys(missionVehicles).length; j++) {
-                        let vehicleType = Object.keys(missionVehicles)[j];
-                        let vehicleTypes = VEHICLE_MAP[vehicleType].vehicle_types.toUpperCase();
-                        let buildingRequirements = VEHICLE_MAP[vehicleType].building_requirements;
-                        let isOptionalVehicle = false;
-                        Object.keys(buildingRequirements).forEach(function (building_type) {
-                            isOptionalVehicle = BUILDINGS[building_type] < buildingRequirements[building_type] ? true : isOptionalVehicle;
-                        });
-                        let vehicleCount = missionVehicles[vehicleType];
-                        logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType + (isOptionalVehicle ? ' (optional)' : ''));
+                                                    if (
+                                                        vehicleTypes.indexOf($tr.attr('vehicle_type').toUpperCase()) === -1
+                                                        && vehicleTypeIds.indexOf(parseInt($tr.find('td[vehicle_type_id]').attr('vehicle_type_id'))) === -1
+                                                    ) {
+                                                        return false;
+                                                    }
 
-                        for (let i = 0; i < vehicleCount; i++) {
-                            let $trs = $table.find('tbody').find('tr').filter(function () {
-                                let $tr = $(this);
+                                                    return !$tr.find('input[type=checkbox].vehicle_checkbox').prop('checked');
+                                                });
 
-                                if (vehicleTypes.indexOf($tr.attr('vehicle_type').toUpperCase()) === -1) {
-                                    return false;
-                                }
+                                                if ($trs.length === 0) {
+                                                    if (isOptionalVehicle) {
+                                                        logger.warning('mission#' + missionId + ' not enough optional vehicles - missing: ' + vehicleType);
+                                                        break;
+                                                    } else {
+                                                        logger.error('mission#' + missionId + ' not enough vehicles - missing: ' + vehicleType);
+                                                        return stoppingMission(missionId, missionTypeId);
+                                                    }
+                                                }
 
-                                return !$tr.find('input[type=checkbox].vehicle_checkbox').prop('checked');
+                                                let $checkbox = $trs.first().find('input[type=checkbox].vehicle_checkbox');
+                                                sendVehicle($checkbox);
+                                            }
+                                        }
+
+                                        while (vehiclesWater < missionDetails.water) {
+                                            let $checkbox = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)').first();
+                                            if ($checkbox.length === 0) {
+                                                logger.error('mission#' + missionId + ' not enough water in available vehicles');
+                                                return stoppingMission(missionId, missionTypeId);
+                                            }
+                                            sendVehicle($checkbox);
+                                        }
+
+                                        logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', ') + (vehiclesWater > 0 ? (' with ' + vehiclesWater + 'l water') : ''));
+
+                                        $('form#mission-form', $iframe.contents()).submit();
+                                        return stoppingMission();
+                                    })
+                                    .catch(function(error) {
+                                        logger.error('mission#' + missionId + ' ' + error.message);
+                                        return stoppingMission();
+                                    });
+                            })
+                            .catch(function(error) {
+                                logger.error('mission#' + missionId + ' ' + error.message);
+                                return stoppingMission();
                             });
-
-                            if ($trs.length === 0) {
-                                if (isOptionalVehicle) {
-                                    logger.warning('mission#' + missionId + ' not enough optional vehicles - missing: ' + vehicleType);
-                                    break;
-                                } else {
-                                    logger.error('mission#' + missionId + ' not enough vehicles - missing: ' + vehicleType);
-                                    setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
-                                    $('#lightbox_box button#lightbox_close').trigger('click');
-                                    starting_mission = false;
-                                    return;
-                                }
-                            }
-
-                            let $checkbox = $trs.first().find('input[type=checkbox].vehicle_checkbox');
-                            sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
-                            vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : parseInt($checkbox.attr('wasser_amount'));
-                            $checkbox.prop('checked', true);
-                        }
-                    }
-
-                    while (vehiclesWater < missionWater) {
-                        logger.debug('mission#' + missionId + ' not enough water in vehicles - missing: ' + (missionWater - vehiclesWater) + 'l');
-                        let $checkbox = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)').first();
-                        if ($checkbox.length === 0) {
-                            logger.error('mission#' + missionId + ' not enough water in available vehicles');
-                            setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
-                            $('#lightbox_box button#lightbox_close').trigger('click');
-                            starting_mission = false;
-                            break;
-                        }
-                        sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
-                        vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : parseInt($checkbox.attr('wasser_amount'));
-                        $checkbox.prop('checked', true);
-                    }
-
-                    logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', ') + (vehiclesWater > 0 ? (' with ' + vehiclesWater + 'l water') : ''));
-
-                    $('form#mission-form', $iframe.contents()).submit();
-                    $('#lightbox_box button#lightbox_close').trigger('click');
-                    starting_mission = false;
-                }, 500);
-            }, 500);
-        }, 500);
+                    })
+                    .catch(function(error) {
+                        logger.error('mission#' + missionId + ' ' + error.message);
+                        return stoppingMission();
+                    });
+            })
+            .catch(function(error) {
+                logger.error('mission#' + missionId + ' ' + error.message);
+                return stoppingMission();
+            });
     }
 })();

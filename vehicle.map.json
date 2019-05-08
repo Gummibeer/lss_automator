@@ -1,48 +1,48 @@
 {
   "LF": {
     "building_requirements": {},
-    "vehicle_types": [
-      "KLF",
-      "LF 10",
-      "LF 20"
-    ]
+    "vehicle_types": {
+      "KLF":  88,
+      "LF 10":  1,
+      "LF 20": 0
+    }
   },
   "DLK": {
     "building_requirements": {
       "fire": 3
     },
-    "vehicle_types": [
-      "DLK 23"
-    ]
+    "vehicle_types": {
+      "DLK 23": 2
+    }
   },
   "RW": {
     "building_requirements": {
       "fire": 4
     },
-    "vehicle_types": [
-      "RW"
-    ]
+    "vehicle_types": {
+      "RW": 4
+    }
   },
   "ELW1": {
     "building_requirements": {
       "fire": 6
     },
-    "vehicle_types": [
-      "ELW 1"
-    ]
+    "vehicle_types": {
+      "ELW 1": 3
+    }
   },
   "SW": {
     "building_requirements": {
       "fire": 7
     },
-    "vehicle_types": [
-      "SW Kats"
-    ]
+    "vehicle_types": {
+      "SW Kats": 16
+    }
   },
   "FUSTW": {
     "building_requirements": {},
-    "vehicle_types": [
-      "FuStW"
-    ]
+    "vehicle_types": {
+      "FuStW": null
+    }
   }
 }
