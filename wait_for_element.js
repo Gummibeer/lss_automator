@@ -9,7 +9,7 @@ function waitForElement(selector, $context, maxRuns) {
             runs++;
             if (runs > maxRuns) {
                 clearInterval(interval);
-                reject(new Error('element not found after ' + maxRuns + ' runs'));
+                reject(new Error('element "'+selector+'" not found after ' + maxRuns + ' runs'));
                 return;
             }
 
