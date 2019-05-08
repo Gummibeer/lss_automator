@@ -47,6 +47,14 @@
       "SW Kats": 16
     }
   },
+  "GWA": {
+    "building_requirements": {
+      "fire": 10
+    },
+    "vehicle_types": {
+      "GW-A": 5
+    }
+  },
   "GWM": {
     "building_requirements": {
       "fire": 10
