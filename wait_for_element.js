@@ -1,5 +1,5 @@
 function waitForElement(selector, $context, maxRuns) {
-    $context = typeof context === 'undefined' ? $(document) : context;
+    $context = typeof $context === 'undefined' ? $(document) : $context;
     maxRuns = typeof maxRuns === 'undefined' ? 10 : maxRuns;
 
     return new Promise(function (resolve, reject) {
