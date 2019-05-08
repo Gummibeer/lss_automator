@@ -195,6 +195,17 @@
     },
     "caption": "Auslaufende Betriebsstoffe"
   },
+  "34": {
+    "vehicles": {
+      "LF": 3,
+      "ELW1": 1,
+      "ELW2": 3,
+      "DLK": 1,
+      "GWM": 1,
+      "RW": 1
+    },
+    "caption": "Brand im Supermarkt"
+  },
   "37": {
     "vehicles": {
       "LF": 1
@@ -224,6 +235,13 @@
       "LF": 1
     },
     "caption": "Brand auf Weihnachtsmarkt"
+  },
+  "53": {
+    "vehicles": {
+      "LF": 1,
+      "RW": 1
+    },
+    "caption": "Verkehrsunfall durch Glatteis"
   },
   "60": {
     "vehicles": {
@@ -378,6 +396,13 @@
     },
     "caption": "Brennendes Kürbisfeld"
   },
+  "114": {
+    "vehicles": {
+      "LF": 1,
+      "DLK": 1
+    },
+    "caption": "Hexe hängt in Baum"
+  },
   "117": {
     "vehicles": {
       "FUSTW": 1
@@ -396,6 +421,13 @@
       "FUSTW": 1
     },
     "caption": "Motorradunfall"
+  },
+  "124": {
+    "vehicles": {
+      "LF": 1,
+      "RW": 1
+    },
+    "caption": "Verkehrsunfall"
   },
   "128": {
     "vehicles": {
@@ -460,6 +492,12 @@
     },
     "caption": "Hilflose Person"
   },
+  "158": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Tiefgarage unter Wasser"
+  },
   "159": {
     "vehicles": {
       "LF": 1
@@ -495,6 +533,13 @@
       "LF": 1
     },
     "caption": "Baum auf Radweg"
+  },
+  "192": {
+    "vehicles": {
+      "LF": 2,
+      "ELW1": 1
+    },
+    "caption": "Brennende Trafostation"
   },
   "203": {
     "vehicles": {
@@ -567,6 +612,19 @@
       "LF": 2
     },
     "caption": "Kleiner Feldbrand durch Feuerwerkskörper"
+  },
+  "262": {
+    "vehicles": {
+      "LF": 3,
+      "ELW1": 1
+    },
+    "caption": "Kellerbrand durch Feuerwerkskörper"
+  },
+  "263": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennendes Bus-Häuschen durch Feuerwerkskörper"
   },
   "264": {
     "vehicles": {
@@ -753,5 +811,13 @@
       "FUSTW": 1
     },
     "caption": "Verschmutzte Fahrbahn"
+  },
+  "441": {
+    "vehicles": {
+      "LF": 1,
+      "RW": 1,
+      "ELW1": 1
+    },
+    "caption": "Brennende Waldhütte"
   }
 }

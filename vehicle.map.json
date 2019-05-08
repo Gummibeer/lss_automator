@@ -31,6 +31,14 @@
       "ELW 1": 3
     }
   },
+  "ELW2": {
+    "building_requirements": {
+      "fire": 13
+    },
+    "vehicle_types": {
+      "ELW 2": 34
+    }
+  },
   "SW": {
     "building_requirements": {
       "fire": 7
@@ -38,6 +46,12 @@
     "vehicle_types": {
       "SW Kats": 16
     }
+  },
+  "GWM": {
+    "building_requirements": {
+      "fire": 10
+    },
+    "vehicle_types": {}
   },
   "FUSTW": {
     "building_requirements": {},
