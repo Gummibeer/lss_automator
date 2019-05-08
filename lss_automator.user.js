@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.37
+// @version     0.1.38
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -195,13 +195,11 @@ Array.prototype.toUpperCase = function () {
                                         if ($waterProgressBar.length === 1) {
                                             let $waterProgressBarPartAtMission = $waterProgressBar.find('#mission_water_bar_at_mission_' + missionId);
                                             if ($waterProgressBarPartAtMission.length === 1) {
-                                                let waterHas = $waterProgressBarPartAtMission.attr('data-water-has');
-                                                existingWater += typeof waterHas === 'string' ? parseInt(waterHas) : 0;
+                                                existingWater += parseInt($waterProgressBarPartAtMission.attr('data-water-has')) || 0;
                                             }
                                             let $waterProgressBarPartDriving = $waterProgressBar.find('#mission_water_bar_driving_' + missionId);
                                             if ($waterProgressBarPartDriving.length === 1) {
-                                                let waterHas = $waterProgressBarPartDriving.attr('data-water-has');
-                                                existingWater += typeof waterHas === 'string' ? parseInt(waterHas) : 0;
+                                                existingWater += parseInt($waterProgressBarPartDriving.attr('data-water-has')) || 0;
                                             }
                                         }
 
