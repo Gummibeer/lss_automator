@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.35
+// @version     0.1.36
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -145,14 +145,9 @@ Array.prototype.toUpperCase = function () {
                     logger.critical('mission#' + missionId + ' details for type#' + missionTypeId + ' not found');
                     return stoppingMission();
                 }
+                let missionWaterTotal = typeof missionDetails.water === 'undefined' ? 0 : missionDetails.water;
 
                 logger.info('mission#' + missionId + ' starting');
-
-                missionDetails.water = typeof missionDetails.water === 'undefined' ? 0 : missionDetails.water;
-
-                if (missionDetails.water > 0) {
-                    logger.debug('mission#' + missionId + ' require ' + missionDetails.water + 'l water');
-                }
 
                 waitForElement('#alarm_button_' + missionId)
                     .then(function ($button) {
@@ -195,6 +190,24 @@ Array.prototype.toUpperCase = function () {
                                             }
                                         });
 
+                                        let existingWater = 0;
+                                        let $waterProgressBar = $('#mission_water_progress_' + missionId, $iframe.contents());
+                                        if ($waterProgressBar.length === 1) {
+                                            let $waterProgressBarPartAtMission = $waterProgressBar.find('#mission_water_bar_at_mission_' + missionId);
+                                            if ($waterProgressBarPartAtMission.length === 1) {
+                                                existingWater += parseInt($waterProgressBarPartAtMission.attr('data-water-has'));
+                                            }
+                                            let $waterProgressBarPartDriving = $waterProgressBar.find('#mission_water_bar_driving_' + missionId);
+                                            if ($waterProgressBarPartDriving.length === 1) {
+                                                existingWater += parseInt($waterProgressBarPartDriving.attr('data-water-has'));
+                                            }
+                                        }
+
+                                        let missionWater = Math.max(0, missionWaterTotal - existingWater);
+                                        if (missionWaterTotal > 0) {
+                                            logger.debug('mission#' + missionId + ' require ' + missionWater + 'l ' + (existingWater > 0 ? '(' + missionWaterTotal + ' - ' + existingWater + ')' : '') + ' water');
+                                        }
+
                                         let vehiclesWater = 0;
                                         let sentVehicles = [];
 
@@ -215,7 +228,7 @@ Array.prototype.toUpperCase = function () {
                                             });
                                             let vehicleCountTotal = missionDetails.vehicles[vehicleGroup];
                                             let existingVehicleCount = (typeof existingVehicles[vehicleGroup] === 'undefined' ? 0 : existingVehicles[vehicleGroup]);
-                                            let vehicleCount = vehicleCountTotal - existingVehicleCount;
+                                            let vehicleCount = Math.max(0, vehicleCountTotal - existingVehicleCount);
                                             logger.debug('mission#' + missionId + ' require ' + vehicleCount + (existingVehicleCount > 0 ? '(' + vehicleCountTotal + ' - ' + existingVehicleCount + ')' : '') + ' ' + vehicleGroup + (isOptionalVehicle ? ' (optional)' : ''));
 
                                             for (let i = 0; i < vehicleCount; i++) {
@@ -247,7 +260,7 @@ Array.prototype.toUpperCase = function () {
                                             }
                                         }
 
-                                        while (vehiclesWater < missionDetails.water) {
+                                        while (vehiclesWater < missionWater) {
                                             let $checkbox = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)').first();
                                             if ($checkbox.length === 0) {
                                                 logger.error('mission#' + missionId + ' not enough water in available vehicles');
@@ -256,9 +269,11 @@ Array.prototype.toUpperCase = function () {
                                             sendVehicle($checkbox);
                                         }
 
-                                        logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', ') + (vehiclesWater > 0 ? (' with ' + vehiclesWater + 'l water') : ''));
+                                        if (sentVehicles.length > 0) {
+                                            $('form#mission-form', $iframe.contents()).submit();
+                                            logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', ') + (vehiclesWater > 0 ? (' with ' + vehiclesWater + 'l water') : ''));
+                                        }
 
-                                        $('form#mission-form', $iframe.contents()).submit();
                                         return stoppingMission();
                                     })
                                     .catch(function (error) {
