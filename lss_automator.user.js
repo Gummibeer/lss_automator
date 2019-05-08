@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.34
+// @version     0.1.35
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -97,10 +97,6 @@ Array.prototype.toUpperCase = function () {
     }
 
     function handleMissionMarkerAdd(mission) {
-        if (mission.date_end !== 0) {
-            return;
-        }
-
         startMission(mission.id, mission.mtid);
     }
 
@@ -109,7 +105,7 @@ Array.prototype.toUpperCase = function () {
     }
 
     function stoppingMission(missionId, missionTypeId) {
-        if(
+        if (
             typeof missionId !== 'undefined'
             && typeof missionTypeId !== 'undefined'
         ) {
@@ -118,7 +114,7 @@ Array.prototype.toUpperCase = function () {
 
 
         let $lightboxClose = $('#lightbox_box button#lightbox_close');
-        if($lightboxClose.length === 1) {
+        if ($lightboxClose.length === 1) {
             $lightboxClose.trigger('click');
         }
 
@@ -134,7 +130,7 @@ Array.prototype.toUpperCase = function () {
         starting_mission = true;
 
         waitForElement('#mission_' + missionId)
-            .then(function($mission) {
+            .then(function ($mission) {
                 if ($mission.hasClass('mission_deleted')) {
                     logger.warning('mission#' + missionId + ' already finished');
                     return stoppingMission();
@@ -159,13 +155,13 @@ Array.prototype.toUpperCase = function () {
                 }
 
                 waitForElement('#alarm_button_' + missionId)
-                    .then(function($button) {
+                    .then(function ($button) {
                         $button.trigger('click');
 
                         waitForElement('iframe.lightbox_iframe[src="/missions/' + missionId + '"]')
-                            .then(function($iframe) {
+                            .then(function ($iframe) {
                                 waitForElement('.tab-content .tab-pane.active', $iframe.contents())
-                                    .then(function($tab) {
+                                    .then(function ($tab) {
                                         let $alert = $tab.find('.alert');
                                         let $table = $tab.find('table#vehicle_show_table_all');
                                         if (
@@ -176,8 +172,32 @@ Array.prototype.toUpperCase = function () {
                                             return stoppingMission(missionId, missionTypeId);
                                         }
 
+                                        function getVehicleGroupByVehicleTypeId(vehicleTypeId) {
+                                            for (let i = 0; i < Object.keys(VEHICLE_MAP).length; i++) {
+                                                let vehicleGroup = Object.keys(VEHICLE_MAP)[i];
+                                                let vehicleTypeIds = Object.values(VEHICLE_MAP[vehicleGroup].vehicle_types);
+
+                                                if (vehicleTypeIds.indexOf(vehicleTypeId) !== -1) {
+                                                    return vehicleGroup;
+                                                }
+                                            }
+                                        }
+
+                                        let existingVehicles = {};
+                                        $('table#mission_vehicle_at_mission', $iframe.contents()).add($('table#mission_vehicle_driving', $iframe.contents())).find('tbody').find('tr').each(function () {
+                                            let $tr = $(this);
+                                            let vehicleTypeId = $tr.find('[vehicle_type_id]').first().attr('vehicle_type_id');
+                                            if (typeof vehicleTypeId === 'string') {
+                                                let vehicleGroup = getVehicleGroupByVehicleTypeId(parseInt(vehicleTypeId));
+                                                if (typeof vehicleGroup === 'string') {
+                                                    existingVehicles[vehicleGroup] = typeof existingVehicles[vehicleGroup] === 'undefined' ? 1 : existingVehicles[vehicleGroup] + 1;
+                                                }
+                                            }
+                                        });
+
                                         let vehiclesWater = 0;
                                         let sentVehicles = [];
+
                                         function sendVehicle($checkbox) {
                                             sentVehicles.push($checkbox.parents('tr[vehicle_type]').first().attr('vehicle_type'));
                                             vehiclesWater += typeof $checkbox.attr('wasser_amount') === 'undefined' ? 0 : parseInt($checkbox.attr('wasser_amount'));
@@ -185,23 +205,25 @@ Array.prototype.toUpperCase = function () {
                                         }
 
                                         for (let j = 0; j < Object.keys(missionDetails.vehicles).length; j++) {
-                                            let vehicleType = Object.keys(missionDetails.vehicles)[j];
-                                            let vehicleTypes = Object.keys(VEHICLE_MAP[vehicleType].vehicle_types).toUpperCase();
-                                            let vehicleTypeIds = Object.values(VEHICLE_MAP[vehicleType].vehicle_types);
-                                            let buildingRequirements = VEHICLE_MAP[vehicleType].building_requirements;
+                                            let vehicleGroup = Object.keys(missionDetails.vehicles)[j];
+                                            let vehicleTypeNames = Object.keys(VEHICLE_MAP[vehicleGroup].vehicle_types).toUpperCase();
+                                            let vehicleTypeIds = Object.values(VEHICLE_MAP[vehicleGroup].vehicle_types);
+                                            let buildingRequirements = VEHICLE_MAP[vehicleGroup].building_requirements;
                                             let isOptionalVehicle = false;
                                             Object.keys(buildingRequirements).forEach(function (building_type) {
                                                 isOptionalVehicle = BUILDINGS[building_type] < buildingRequirements[building_type] ? true : isOptionalVehicle;
                                             });
-                                            let vehicleCount = missionDetails.vehicles[vehicleType];
-                                            logger.debug('mission#' + missionId + ' require ' + vehicleCount + ' ' + vehicleType + (isOptionalVehicle ? ' (optional)' : ''));
+                                            let vehicleCountTotal = missionDetails.vehicles[vehicleGroup];
+                                            let existingVehicleCount = (typeof existingVehicles[vehicleGroup] === 'undefined' ? 0 : existingVehicles[vehicleGroup]);
+                                            let vehicleCount = vehicleCountTotal - existingVehicleCount;
+                                            logger.debug('mission#' + missionId + ' require ' + vehicleCount + (existingVehicleCount > 0 ? '(' + vehicleCountTotal + ' - ' + existingVehicleCount + ')' : '') + ' ' + vehicleGroup + (isOptionalVehicle ? ' (optional)' : ''));
 
                                             for (let i = 0; i < vehicleCount; i++) {
                                                 let $trs = $table.find('tbody').find('tr').filter(function () {
                                                     let $tr = $(this);
 
                                                     if (
-                                                        vehicleTypes.indexOf($tr.attr('vehicle_type').toUpperCase()) === -1
+                                                        vehicleTypeNames.indexOf($tr.attr('vehicle_type').toUpperCase()) === -1
                                                         && vehicleTypeIds.indexOf(parseInt($tr.find('td[vehicle_type_id]').attr('vehicle_type_id'))) === -1
                                                     ) {
                                                         return false;
@@ -212,10 +234,10 @@ Array.prototype.toUpperCase = function () {
 
                                                 if ($trs.length === 0) {
                                                     if (isOptionalVehicle) {
-                                                        logger.warning('mission#' + missionId + ' not enough optional vehicles - missing: ' + vehicleType);
+                                                        logger.warning('mission#' + missionId + ' not enough optional vehicles - missing: ' + vehicleGroup);
                                                         break;
                                                     } else {
-                                                        logger.error('mission#' + missionId + ' not enough vehicles - missing: ' + vehicleType);
+                                                        logger.error('mission#' + missionId + ' not enough vehicles - missing: ' + vehicleGroup);
                                                         return stoppingMission(missionId, missionTypeId);
                                                     }
                                                 }
@@ -239,22 +261,22 @@ Array.prototype.toUpperCase = function () {
                                         $('form#mission-form', $iframe.contents()).submit();
                                         return stoppingMission();
                                     })
-                                    .catch(function(error) {
+                                    .catch(function (error) {
                                         logger.error('mission#' + missionId + ' ' + error.message);
                                         return stoppingMission();
                                     });
                             })
-                            .catch(function(error) {
+                            .catch(function (error) {
                                 logger.error('mission#' + missionId + ' ' + error.message);
                                 return stoppingMission();
                             });
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         logger.error('mission#' + missionId + ' ' + error.message);
                         return stoppingMission();
                     });
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 logger.error('mission#' + missionId + ' ' + error.message);
                 return stoppingMission();
             });
