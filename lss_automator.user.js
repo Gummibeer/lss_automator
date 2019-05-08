@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.36
+// @version     0.1.37
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -195,17 +195,19 @@ Array.prototype.toUpperCase = function () {
                                         if ($waterProgressBar.length === 1) {
                                             let $waterProgressBarPartAtMission = $waterProgressBar.find('#mission_water_bar_at_mission_' + missionId);
                                             if ($waterProgressBarPartAtMission.length === 1) {
-                                                existingWater += parseInt($waterProgressBarPartAtMission.attr('data-water-has'));
+                                                let waterHas = $waterProgressBarPartAtMission.attr('data-water-has');
+                                                existingWater += typeof waterHas === 'string' ? parseInt(waterHas) : 0;
                                             }
                                             let $waterProgressBarPartDriving = $waterProgressBar.find('#mission_water_bar_driving_' + missionId);
                                             if ($waterProgressBarPartDriving.length === 1) {
-                                                existingWater += parseInt($waterProgressBarPartDriving.attr('data-water-has'));
+                                                let waterHas = $waterProgressBarPartDriving.attr('data-water-has');
+                                                existingWater += typeof waterHas === 'string' ? parseInt(waterHas) : 0;
                                             }
                                         }
 
                                         let missionWater = Math.max(0, missionWaterTotal - existingWater);
                                         if (missionWaterTotal > 0) {
-                                            logger.debug('mission#' + missionId + ' require ' + missionWater + 'l ' + (existingWater > 0 ? '(' + missionWaterTotal + ' - ' + existingWater + ')' : '') + ' water');
+                                            logger.debug('mission#' + missionId + ' require ' + missionWater + 'l ' + (existingWater > 0 ? '(' + missionWaterTotal + ' - ' + existingWater + ') ' : '') + 'water');
                                         }
 
                                         let vehiclesWater = 0;
