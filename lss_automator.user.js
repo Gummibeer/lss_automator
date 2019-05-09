@@ -43,11 +43,14 @@ Array.prototype.toUpperCase = function () {
     const MISSION_MAP = JSON.parse(GM_getResourceText('MissionMap'));
     const BUILDINGS = {
         fire: 0,
+        police: 0,
     };
     $.getJSON('https://www.leitstellenspiel.de/api/buildings', function (data) {
         data.forEach(function (building) {
             if (building.building_type === 0) {
                 BUILDINGS.fire++;
+            } else if (building.building_type === 6) {
+                BUILDINGS.police++;
             }
         });
     });
