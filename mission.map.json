@@ -583,6 +583,13 @@
     },
     "caption": "Brennender Bollerwagen"
   },
+  "223": {
+    "vehicles": {
+      "LF": 3,
+      "FUSTW": 1
+    },
+    "caption": "Brandsicherheitswache bei Volksfest"
+  },
   "230": {
     "vehicles": {
       "LF": 1
@@ -787,6 +794,46 @@
     },
     "caption": "Tor gefallen"
   },
+  "379": {
+    "vehicles": {
+      "LF": 3,
+      "ELW": 1,
+      "RW": 1,
+      "FWK": 1,
+      "FUSTW": 1
+    },
+    "caption": "PKW im Gleisbett"
+  },
+  "380": {
+    "vehicles": {
+      "LF": 3,
+      "ELW": 1,
+      "RW": 1,
+      "FWK": 1,
+      "FUSTW": 1
+    },
+    "caption": "PKW im Gleisbett"
+  },
+  "381": {
+    "vehicles": {
+      "LF": 3,
+      "ELW": 1,
+      "RW": 1,
+      "FWK": 1,
+      "FUSTW": 1
+    },
+    "caption": "PKW im Gleisbett"
+  },
+  "382": {
+    "vehicles": {
+      "LF": 3,
+      "ELW": 1,
+      "RW": 1,
+      "FWK": 1,
+      "FUSTW": 1
+    },
+    "caption": "PKW im Gleisbett"
+  },
   "384": {
     "vehicles": {
       "LF": 2
@@ -804,6 +851,17 @@
       "FUSTW": 1
     },
     "caption": "Sachbeschädigung an PKW"
+  },
+  "428": {
+    "vehicles": {
+      "LF": 1,
+      "DLK": 1,
+      "RW": 1,
+      "ELW1": 1,
+      "GWH": 1,
+      "FUSTW": 1
+    },
+    "caption": "Schneelast auf Dach"
   },
   "436": {
     "vehicles": {

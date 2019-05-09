@@ -61,10 +61,22 @@
     },
     "vehicle_types": {}
   },
+  "GWH": {
+    "building_requirements": {
+      "fire": 12
+    },
+    "vehicle_types": {}
+  },
+  "FWK": {
+    "building_requirements": {
+      "fire": 14
+    },
+    "vehicle_types": {}
+  },
   "FUSTW": {
     "building_requirements": {},
     "vehicle_types": {
-      "FuStW": null
+      "FuStW": 32
     }
   }
 }
