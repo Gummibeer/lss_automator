@@ -446,6 +446,13 @@
     },
     "caption": "Motorradunfall"
   },
+  "123": {
+    "vehicles": {
+      "LF": 1,
+      "FUSTW": 1
+    },
+    "caption": "Verkehrsunfall"
+  },
   "124": {
     "vehicles": {
       "LF": 1,
@@ -744,6 +751,12 @@
     },
     "caption": "Verstoß gegen Sprengstoffverordnung"
   },
+  "276": {
+    "vehicles": {
+      "FUSTW": 4
+    },
+    "caption": "Schwertransport"
+  },
   "277": {
     "vehicles": {
       "LF": 1
@@ -830,6 +843,12 @@
     },
     "caption": "Saunabrand"
   },
+  "322": {
+    "vehicles": {
+      "FUSTW": 4
+    },
+    "caption": "Geplante Autobahnsperrung"
+  },
   "349": {
     "vehicles": {
       "LF": 1
@@ -883,6 +902,12 @@
       "FUSTW": 2
     },
     "caption": "Vollstreckung Haftbefehl"
+  },
+  "370": {
+    "vehicles": {
+      "FUSTW": 4
+    },
+    "caption": "Geisterfahrer"
   },
   "371": {
     "vehicles": {
