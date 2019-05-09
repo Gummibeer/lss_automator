@@ -92,8 +92,6 @@ Array.prototype.toUpperCase = function () {
         }).each(function () {
             startMission($(this).attr('mission_id'), $(this).attr('mission_type_id'));
         });
-
-        $missionList.find('div[mission_id].mission_deleted').remove();
     }
 
     startMissionsInMissionList();
