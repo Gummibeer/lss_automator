@@ -167,12 +167,12 @@ Array.prototype.toUpperCase = function () {
 
                 let missionDetails = MISSION_MAP[missionTypeId];
                 if (typeof missionDetails === 'undefined') {
-                    logger.critical('mission#' + missionId + ' details for type#' + missionTypeId + ' not found');
+                    logger.critical('details for type#' + missionTypeId + ' not found', missionId, missionTypeId);
                     return stoppingMission();
                 }
                 let missionWaterTotal = typeof missionDetails.water === 'undefined' ? 0 : missionDetails.water;
 
-                logger.info('mission#' + missionId + ' starting');
+                logger.info('starting', missionId, missionTypeId);
 
                 waitForElement('#alarm_button_' + missionId)
                     .then(function ($button) {
@@ -184,7 +184,7 @@ Array.prototype.toUpperCase = function () {
                                     .then(function ($tab) {
                                         let $prisoners = $('#h2_prisoners', $iframe.contents());
                                         if ($prisoners.length === 1) {
-                                            logger.debug('mission#' + missionId + ' release prisoners');
+                                            logger.debug('release prisoners', missionId, missionTypeId);
                                             let $prisonerReleaseButton = $prisoners.parent().find('.alert.alert-info').find('a.btn');
                                             $.ajax({
                                                 url: $prisonerReleaseButton.attr('href'),
@@ -202,7 +202,7 @@ Array.prototype.toUpperCase = function () {
                                             $alert.length === 1
                                             || $table.length === 0
                                         ) {
-                                            logger.error('mission#' + missionId + ' no vehicles available');
+                                            logger.error('no vehicles available', missionId, missionTypeId);
                                             return stoppingMission(missionId, missionTypeId);
                                         }
 
@@ -244,7 +244,7 @@ Array.prototype.toUpperCase = function () {
 
                                         let missionWater = Math.max(0, missionWaterTotal - existingWater);
                                         if (missionWaterTotal > 0) {
-                                            logger.debug('mission#' + missionId + ' require ' + missionWater + 'l ' + (existingWater > 0 ? '(' + missionWaterTotal + ' - ' + existingWater + ') ' : '') + 'water');
+                                            logger.debug('require ' + missionWater + 'l ' + (existingWater > 0 ? '(' + missionWaterTotal + ' - ' + existingWater + ') ' : '') + 'water', missionId, missionTypeId);
                                         }
 
                                         let vehiclesWater = 0;
@@ -268,7 +268,7 @@ Array.prototype.toUpperCase = function () {
                                             let vehicleCountTotal = missionDetails.vehicles[vehicleGroup];
                                             let existingVehicleCount = (typeof existingVehicles[vehicleGroup] === 'undefined' ? 0 : existingVehicles[vehicleGroup]);
                                             let vehicleCount = Math.max(0, vehicleCountTotal - existingVehicleCount);
-                                            logger.debug('mission#' + missionId + ' require ' + vehicleCount + (existingVehicleCount > 0 ? '(' + vehicleCountTotal + ' - ' + existingVehicleCount + ')' : '') + ' ' + vehicleGroup + (isOptionalVehicle ? ' (optional)' : ''));
+                                            logger.debug('require ' + vehicleCount + (existingVehicleCount > 0 ? '(' + vehicleCountTotal + ' - ' + existingVehicleCount + ')' : '') + ' ' + vehicleGroup + (isOptionalVehicle ? ' (optional)' : ''), missionId, missionTypeId);
 
                                             for (let i = 0; i < vehicleCount; i++) {
                                                 let $trs = $table.find('tbody').find('tr').filter(function () {
@@ -286,10 +286,10 @@ Array.prototype.toUpperCase = function () {
 
                                                 if ($trs.length === 0) {
                                                     if (isOptionalVehicle) {
-                                                        logger.warning('mission#' + missionId + ' not enough optional vehicles - missing: ' + vehicleGroup);
+                                                        logger.warning('not enough optional vehicles - missing: ' + vehicleGroup, missionId, missionTypeId);
                                                         break;
                                                     } else {
-                                                        logger.error('mission#' + missionId + ' not enough vehicles - missing: ' + vehicleGroup);
+                                                        logger.error('not enough vehicles - missing: ' + vehicleGroup, missionId, missionTypeId);
                                                         return stoppingMission(missionId, missionTypeId);
                                                     }
                                                 }
@@ -302,7 +302,7 @@ Array.prototype.toUpperCase = function () {
                                         while (vehiclesWater < missionWater) {
                                             let $checkbox = $table.find('tbody').find('tr').find('input[type=checkbox][wasser_amount]:not(:checked)').first();
                                             if ($checkbox.length === 0) {
-                                                logger.error('mission#' + missionId + ' not enough water in available vehicles');
+                                                logger.error('not enough water in available vehicles', missionId, missionTypeId);
                                                 return stoppingMission(missionId, missionTypeId);
                                             }
                                             sendVehicle($checkbox);
@@ -310,28 +310,28 @@ Array.prototype.toUpperCase = function () {
 
                                         if (sentVehicles.length > 0) {
                                             $('form#mission-form', $iframe.contents()).submit();
-                                            logger.debug('mission#' + missionId + ' sent vehicles: ' + sentVehicles.join(', ') + (vehiclesWater > 0 ? (' with ' + vehiclesWater + 'l water') : ''));
+                                            logger.debug('sent vehicles: ' + sentVehicles.join(', ') + (vehiclesWater > 0 ? (' with ' + vehiclesWater + 'l water') : ''), missionId, missionTypeId);
                                         }
 
                                         return stoppingMission();
                                     })
                                     .catch(function (error) {
-                                        logger.error('mission#' + missionId + ' ' + error.message);
+                                        logger.error(error.message, missionId, missionTypeId);
                                         return stoppingMission();
                                     });
                             })
                             .catch(function (error) {
-                                logger.error('mission#' + missionId + ' ' + error.message);
+                                logger.error(error.message, missionId, missionTypeId);
                                 return stoppingMission();
                             });
                     })
                     .catch(function (error) {
-                        logger.error('mission#' + missionId + ' ' + error.message);
+                        logger.error(error.message, missionId, missionTypeId);
                         return stoppingMission();
                     });
             })
             .catch(function (error) {
-                logger.error('mission#' + missionId + ' ' + error.message);
+                logger.error(error.message, missionId, missionTypeId);
                 return stoppingMission();
             });
     }

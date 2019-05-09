@@ -73,12 +73,19 @@ class Logger {
     constructor(module, level, formatter) {
         this._module = String(module);
         this._level = this._normalizeLevel(level, Logger.ERROR);
-        this._formatter = typeof formatter === 'function' ? formatter : function (level, message) {
-            return '[' + this._module + '][' + level + '] ' + message;
+        this._formatter = typeof formatter === 'function' ? formatter : function (level, message, missionId, missionTypeId) {
+            let missionPrefix = '';
+            if (
+                typeof missionId !== 'undefined'
+                && typeof missionTypeId !== 'undefined'
+            ) {
+                missionPrefix = '[' + missionId + '][' + missionTypeId + ']';
+            }
+            return '[' + this._module + '][' + level + ']' + missionPrefix + ' ' + message.trim();
         };
     }
 
-    log(level, message) {
+    log(level, message, missionId, missionTypeId) {
         level = this._normalizeLevel(level, Logger.INFO);
 
         if (level < this._level) {
@@ -87,39 +94,39 @@ class Logger {
 
         let method = Logger.METHODS[level];
 
-        console[method]('%c' + this._formatter.call(this, level, message), Logger.STYLES[level]);
+        console[method]('%c' + this._formatter.call(this, level, message, missionId, missionTypeId), Logger.STYLES[level]);
     }
 
-    debug(message) {
-        this.log(Logger.DEBUG, message);
+    debug(message, missionId, missionTypeId) {
+        this.log(Logger.DEBUG, message, missionId, missionTypeId);
     }
 
-    info(message) {
-        this.log(Logger.INFO, message);
+    info(message, missionId, missionTypeId) {
+        this.log(Logger.INFO, message, missionId, missionTypeId);
     }
 
-    notice(message) {
-        this.log(Logger.NOTICE, message);
+    notice(message, missionId, missionTypeId) {
+        this.log(Logger.NOTICE, message, missionId, missionTypeId);
     }
 
-    warning(message) {
-        this.log(Logger.WARNING, message);
+    warning(message, missionId, missionTypeId) {
+        this.log(Logger.WARNING, message, missionId, missionTypeId);
     }
 
-    error(message) {
-        this.log(Logger.ERROR, message);
+    error(message, missionId, missionTypeId) {
+        this.log(Logger.ERROR, message, missionId, missionTypeId);
     }
 
-    critical(message) {
-        this.log(Logger.CRITICAL, message);
+    critical(message, missionId, missionTypeId) {
+        this.log(Logger.CRITICAL, message, missionId, missionTypeId);
     }
 
-    alert(message) {
-        this.log(Logger.ALERT, message);
+    alert(message, missionId, missionTypeId) {
+        this.log(Logger.ALERT, message, missionId, missionTypeId);
     }
 
-    emergency(message) {
-        this.log(Logger.EMERGENCY, message);
+    emergency(message, missionId, missionTypeId) {
+        this.log(Logger.EMERGENCY, message, missionId, missionTypeId);
     }
 
     _normalizeLevel(level, fallback) {
