@@ -172,7 +172,7 @@ Array.prototype.toUpperCase = function () {
                 }
                 let missionWaterTotal = typeof missionDetails.water === 'undefined' ? 0 : missionDetails.water;
 
-                logger.info('starting', missionId, missionTypeId);
+                logger.info('start mission "' + missionDetails.caption + '"', missionId, missionTypeId);
 
                 waitForElement('#alarm_button_' + missionId)
                     .then(function ($button) {
