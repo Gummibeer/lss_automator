@@ -23,6 +23,16 @@
  * @typedef {Object} VehicleDetail
  * @property {Object.<string, number>} building_requirements
  * @property {Object.<string, number>} vehicle_types
+ *
+ * @typedef {Object} ApiBuilding
+ * @property {number} id
+ * @property {number} personal_count
+ * @property {number} level
+ * @property {number} building_type
+ * @property {string} caption
+ * @property {number} latitude
+ * @property {number} longitude
+ * @property {Array} extensions
  */
 
 Array.prototype.toUpperCase = function () {
@@ -46,6 +56,7 @@ Array.prototype.toUpperCase = function () {
         police: 0,
     };
     $.getJSON('https://www.leitstellenspiel.de/api/buildings', function (data) {
+        /** @type ApiBuilding */
         data.forEach(function (building) {
             if (building.building_type === 0) {
                 BUILDINGS.fire++;
