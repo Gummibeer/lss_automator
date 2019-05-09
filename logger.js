@@ -75,11 +75,11 @@ class Logger {
         this._level = this._normalizeLevel(level, Logger.ERROR);
         this._formatter = typeof formatter === 'function' ? formatter : function (level, message, missionId, missionTypeId) {
             let missionPrefix = '';
-            if (
-                typeof missionId !== 'undefined'
-                && typeof missionTypeId !== 'undefined'
-            ) {
-                missionPrefix = '[' + missionId + '][' + missionTypeId + ']';
+            if (typeof missionId !== 'undefined') {
+                missionPrefix += '[' + missionId + ']';
+            }
+            if (typeof missionTypeId !== 'undefined') {
+                missionPrefix += '[' + missionTypeId + ']';
             }
             return '[' + this._module + '][' + level + ']' + missionPrefix + ' ' + message.trim();
         };
