@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.42
+// @version     0.1.43
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -192,6 +192,12 @@ Array.prototype.toUpperCase = function () {
                             .then(function ($iframe) {
                                 waitForElement('.tab-content .tab-pane.active', $iframe.contents())
                                     .then(function ($tab) {
+                                        let $prisoners = $iframe.find('#h2_prisoners');
+                                        if ($prisoners.length === 1) {
+                                            $prisoners.parent().find('.alert.alert-info').find('a[href="/missions/' + missionId + '/gefangene/entlassen"]').click();
+                                            stoppingMission();
+                                        }
+
                                         let $alert = $tab.find('.alert');
                                         let $table = $tab.find('table#vehicle_show_table_all');
                                         if (
