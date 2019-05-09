@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.38
+// @version     0.1.39
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -52,7 +52,7 @@ Array.prototype.toUpperCase = function () {
         });
     });
 
-    let starting_mission = false;
+    let startingMission = false;
 
     setTimeout(function () {
         logger.notice('reload window');
@@ -71,38 +71,30 @@ Array.prototype.toUpperCase = function () {
         }
     });
 
-    let $missions = $('#mission_list').find('div[mission_id]:not(.mission_deleted)').filter(function () {
-        return $(this).find('.mission_panel_red').length === 1;
-    });
-
-    if ($missions.length > 0) {
-        $missions.each(function () {
-            let $mission = $(this);
-            startMission($mission.attr('mission_id'), $mission.attr('mission_type_id'));
+    function startMissionsInMissionList() {
+        let $missionList = $('#mission_list');
+        $missionList.find('div[mission_id]:not(.mission_deleted)').filter(function () {
+            return $(this).find('.mission_panel_red').length === 1;
+        }).each(function () {
+            startMission($(this).attr('mission_id'), $(this).attr('mission_type_id'));
         });
+
+        $missionList.find('div[mission_id].mission_deleted').remove();
     }
 
-    const subscription = faye.subscribe('/private-user' + user_id + 'de', handleFayeEvent);
+    startMissionsInMissionList();
 
-    function handleFayeEvent(message) {
-        logger.faye(message);
-
-        if (message.indexOf('missionMarkerAdd') === 0) {
-            let body = JSON.parse(message.split(');')[0].replace('missionMarkerAdd(', '').replace(');', '').trim());
-            handleMissionMarkerAdd(body);
-        } else if (message.indexOf('missionDelete') === 0) {
-            let body = JSON.parse(message.split(');')[0].replace('missionDelete(', '').replace(');', '').trim());
-            handleMissionDelete(body);
-        }
-    }
-
-    function handleMissionMarkerAdd(mission) {
-        startMission(mission.id, mission.mtid);
-    }
-
-    function handleMissionDelete(id) {
-        logger.info('mission#' + id + ' finished');
-    }
+    const missionObserver = new MutationObserver(function (mutations) {
+        startMissionsInMissionList();
+    });
+    missionObserver.observe(document.getElementById('mission_list'), {
+        childList: true,
+        attributes: true,
+        characterData: false,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: false,
+    });
 
     function stoppingMission(missionId, missionTypeId) {
         if (
@@ -118,25 +110,23 @@ Array.prototype.toUpperCase = function () {
             $lightboxClose.trigger('click');
         }
 
-        starting_mission = false;
+        startingMission = false;
     }
 
     function startMission(missionId, missionTypeId) {
-        if (starting_mission) {
+        if (startingMission) {
             setTimeout(startMission, 1000, missionId, missionTypeId);
             return;
         }
 
-        starting_mission = true;
+        startingMission = true;
 
         waitForElement('#mission_' + missionId)
             .then(function ($mission) {
                 if ($mission.hasClass('mission_deleted')) {
-                    logger.warning('mission#' + missionId + ' already finished');
                     return stoppingMission();
                 }
                 if ($mission.find('.mission_panel_red').length === 0) {
-                    logger.warning('mission#' + missionId + ' already started');
                     return stoppingMission();
                 }
 
