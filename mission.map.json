@@ -315,6 +315,12 @@
     },
     "caption": "Parkendes Auto gerammt"
   },
+  "73": {
+    "vehicles": {
+      "FUSTW": 3
+    },
+    "caption": "Schlägerei"
+  },
   "74": {
     "vehicles": {
       "FUSTW": 2
@@ -447,6 +453,14 @@
     },
     "caption": "Verkehrsunfall"
   },
+  "125": {
+    "vehicles": {
+      "LF": 1,
+      "RW": 1,
+      "FUSTW": 1
+    },
+    "caption": "Verkehrsunfall"
+  },
   "128": {
     "vehicles": {
       "LF": 1,
@@ -510,6 +524,12 @@
     },
     "caption": "Hausfriedensbruch"
   },
+  "151": {
+    "vehicles": {
+      "FUSTW": 3
+    },
+    "caption": "Raub"
+  },
   "152": {
     "vehicles": {
       "FUSTW": 2
@@ -545,6 +565,12 @@
       "LF": 1
     },
     "caption": "Baum auf PKW"
+  },
+  "188": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Personenkontrolle"
   },
   "189": {
     "vehicles": {
