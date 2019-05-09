@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.39
+// @version     0.1.40
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -94,6 +94,11 @@ Array.prototype.toUpperCase = function () {
         subtree: true,
         attributeOldValue: false,
         characterDataOldValue: false,
+        attributeFilter: [
+            'class',
+            'mission_id',
+            'mission_type_id',
+        ]
     });
 
     function stoppingMission(missionId, missionTypeId) {
