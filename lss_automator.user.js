@@ -30,7 +30,7 @@ Array.prototype.toUpperCase = function () {
 };
 
 (function () {
-    if (window.location.href !== 'https://www.leitstellenspiel.de/') {
+    if (window.location.pathname !== '/') {
         return;
     }
     const logger = new Logger('lss-automator', Logger.DEBUG);
