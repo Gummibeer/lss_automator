@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.40
+// @version     0.1.41
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -52,12 +52,13 @@ Array.prototype.toUpperCase = function () {
         });
     });
 
+    let missionQueue = {};
     let startingMission = false;
 
     setTimeout(function () {
         logger.notice('reload window');
         window.location.reload();
-    }, 1000 * 60 * 60);
+    }, 1000 * 60 * 10);
 
     $.get('https://www.leitstellenspiel.de/einsaetze/leitstelle/-1', function (html) {
         let availableMissionIds = [];
@@ -76,7 +77,7 @@ Array.prototype.toUpperCase = function () {
         $missionList.find('div[mission_id]:not(.mission_deleted)').filter(function () {
             return $(this).find('.mission_panel_red').length === 1;
         }).each(function () {
-            startMission($(this).attr('mission_id'), $(this).attr('mission_type_id'));
+            queueMission($(this).attr('mission_id'), $(this).attr('mission_type_id'), 500);
         });
 
         $missionList.find('div[mission_id].mission_deleted').remove();
@@ -101,12 +102,29 @@ Array.prototype.toUpperCase = function () {
         ]
     });
 
+    function queueMission(missionId, missionTypeId, delay) {
+        if (typeof missionQueue[missionId] === 'undefined') {
+            missionQueue[missionId] = {
+                mission_id: missionId,
+                mission_type_id: missionTypeId,
+                timeout: setTimeout(startMission, delay, missionId, missionTypeId),
+            };
+        } else if (
+            missionQueue[missionId].mission_id != missionId
+            || missionQueue[missionId].mission_type_id != missionTypeId
+        ) {
+            clearTimeout(missionQueue[missionId].timeout);
+            delete missionQueue[missionId];
+            queueMission(missionId, missionTypeId, delay);
+        }
+    }
+
     function stoppingMission(missionId, missionTypeId) {
         if (
             typeof missionId !== 'undefined'
             && typeof missionTypeId !== 'undefined'
         ) {
-            setTimeout(startMission, 1000 * 60, missionId, missionTypeId);
+            queueMission(missionId, missionTypeId, 1000 * 60);
         }
 
 
@@ -120,11 +138,12 @@ Array.prototype.toUpperCase = function () {
 
     function startMission(missionId, missionTypeId) {
         if (startingMission) {
-            setTimeout(startMission, 1000, missionId, missionTypeId);
+            queueMission(missionId, missionTypeId, 1000);
             return;
         }
 
         startingMission = true;
+        delete missionQueue[missionId];
 
         waitForElement('#mission_' + missionId)
             .then(function ($mission) {
