@@ -59,7 +59,7 @@ Array.prototype.toUpperCase = function () {
     let startingMission = false;
 
     setTimeout(function () {
-        logger.notice('reload window');
+        logger.notice('reload window - every 10min');
         window.location.reload();
     }, 1000 * 60 * 10);
 
@@ -89,6 +89,24 @@ Array.prototype.toUpperCase = function () {
     startMissionsInMissionList();
 
     const missionObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(mutation => {
+            if (
+                mutation.type === 'childList'
+                && mutation.addedNodes.length > 0
+            ) {
+                mutation.addedNodes.forEach(node => {
+                    if (
+                        typeof node.tagName === 'string'
+                        && node.tagName.toLowerCase() === 'small'
+                        && node.id.indexOf('mission_old_caption_') === 0
+                    ) {
+                        logger.notice('reload window - mission evolved');
+                        window.location.reload();
+                    }
+                })
+            }
+        });
+
         startMissionsInMissionList();
     });
     missionObserver.observe(document.getElementById('mission_list'), {
