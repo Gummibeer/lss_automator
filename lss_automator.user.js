@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.45
+// @version     0.1.46
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
