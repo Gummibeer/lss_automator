@@ -315,6 +315,12 @@
     },
     "caption": "Parkendes Auto gerammt"
   },
+  "74": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Randalierende Person"
+  },
   "76": {
     "vehicles": {
       "LF": 2
@@ -403,11 +409,23 @@
     },
     "caption": "Hexe hängt in Baum"
   },
+  "116": {
+    "vehicles": {
+      "FUSTW": 4
+    },
+    "caption": "Monster ausgebrochen"
+  },
   "117": {
     "vehicles": {
       "FUSTW": 1
     },
     "caption": "Kürbisse geklaut"
+  },
+  "118": {
+    "vehicles": {
+      "FUSTW": 3
+    },
+    "caption": "Frankenstein gesichtet"
   },
   "119": {
     "vehicles": {
@@ -435,6 +453,12 @@
       "FUSTW": 1
     },
     "caption": "Auffahrunfall"
+  },
+  "130": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Rangelei auf Weihnachtsmarkt"
   },
   "138": {
     "water": 3000,
@@ -485,6 +509,12 @@
       "FUSTW": 1
     },
     "caption": "Hausfriedensbruch"
+  },
+  "152": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Häusliche Gewalt"
   },
   "153": {
     "vehicles": {
@@ -541,6 +571,12 @@
     },
     "caption": "Brennende Trafostation"
   },
+  "202": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Diebstahl auf Weihnachtsmarkt"
+  },
   "203": {
     "vehicles": {
       "LF": 2
@@ -590,6 +626,12 @@
     },
     "caption": "Brandsicherheitswache bei Volksfest"
   },
+  "228": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Absicherung Musikumzug"
+  },
   "230": {
     "vehicles": {
       "LF": 1
@@ -601,6 +643,12 @@
       "FUSTW": 1
     },
     "caption": "Wildunfall"
+  },
+  "257": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Verkehrsüberwachung"
   },
   "259": {
     "vehicles": {
@@ -714,6 +762,18 @@
     },
     "caption": "Eierkocherbrand"
   },
+  "292": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Tankbetrug"
+  },
+  "301": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Tiere auf der Fahrbahn"
+  },
   "303": {
     "vehicles": {
       "LF": 2,
@@ -734,11 +794,27 @@
     },
     "caption": "Ausgelöster Heimrauchmelder"
   },
+  "321": {
+    "vehicles": {
+      "LF": 3,
+      "DLK": 1,
+      "GWA": 1,
+      "ELW1": 1,
+      "FUSTW": 2
+    },
+    "caption": "Saunabrand"
+  },
   "349": {
     "vehicles": {
       "LF": 1
     },
     "caption": "Brandgeruch"
+  },
+  "357": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Bank: Stiller Alarm"
   },
   "360": {
     "vehicles": {
@@ -776,6 +852,12 @@
     },
     "caption": "Brennender Blumenstrauß"
   },
+  "366": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Vollstreckung Haftbefehl"
+  },
   "371": {
     "vehicles": {
       "LF": 1
@@ -793,6 +875,12 @@
       "LF": 1
     },
     "caption": "Tor gefallen"
+  },
+  "376": {
+    "vehicles": {
+      "FUSTW": 2
+    },
+    "caption": "Pokal geklaut"
   },
   "379": {
     "vehicles": {
@@ -877,5 +965,11 @@
       "ELW1": 1
     },
     "caption": "Brennende Waldhütte"
+  },
+  "445": {
+    "vehicles": {
+      "FUSTW": 1
+    },
+    "caption": "Ei rollt in Schlangenlinien"
   }
 }
