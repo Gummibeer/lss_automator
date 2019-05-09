@@ -189,6 +189,17 @@
     },
     "caption": "Garagenbrand"
   },
+  "29": {
+    "vehicles": {
+      "LF": 3,
+      "RW": 1,
+      "ELW1": 1,
+      "SW": 1,
+      "GWA": 1
+
+    },
+    "caption": "Maschinenbrand"
+  },
   "31": {
     "vehicles": {
       "LF": 1
@@ -199,12 +210,22 @@
     "vehicles": {
       "LF": 3,
       "ELW1": 1,
-      "ELW2": 3,
+      "ELW2": 1,
       "DLK": 1,
       "GWM": 1,
       "RW": 1
     },
     "caption": "Brand im Supermarkt"
+  },
+  "35": {
+    "vehicles": {
+      "LF": 4,
+      "ELW1": 1,
+      "ELW2": 1,
+      "DLK": 1,
+      "RW": 2
+    },
+    "caption": "Feuer im Krankenhaus"
   },
   "37": {
     "vehicles": {
@@ -474,6 +495,12 @@
       "FUSTW": 1
     },
     "caption": "Auffahrunfall"
+  },
+  "129": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Adventskranz"
   },
   "130": {
     "vehicles": {
@@ -807,6 +834,16 @@
     },
     "caption": "Tankbetrug"
   },
+  "299": {
+    "vehicles": {
+      "LF": 5,
+      "ELW1": 1,
+      "DLK": 1,
+      "GWA": 1,
+      "SW": 1
+    },
+    "caption": "Strohballen qualmen in Scheune"
+  },
   "301": {
     "vehicles": {
       "FUSTW": 2
@@ -848,6 +885,16 @@
       "FUSTW": 4
     },
     "caption": "Geplante Autobahnsperrung"
+  },
+  "323": {
+    "vehicles": {
+      "LF": 2,
+      "DLK": 1,
+      "ELW1": 1,
+      "RW": 1,
+      "FUSTW": 1
+    },
+    "caption": "Dehnfugenbrand"
   },
   "349": {
     "vehicles": {
