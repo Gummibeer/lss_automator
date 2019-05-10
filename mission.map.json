@@ -566,6 +566,14 @@
     },
     "caption": "Flächenbrand"
   },
+  "140": {
+    "water": 3000,
+    "vehicles": {
+      "LF": 1,
+      "FUSTW": 2
+    },
+    "caption": "Flächenbrand"
+  },
   "142": {
     "vehicles": {
       "LF": 2,
@@ -687,6 +695,14 @@
     "vehicles": {
       "LF": 2,
       "ELW1": 1
+    },
+    "caption": "Brennende Trafostation"
+  },
+  "193": {
+    "vehicles": {
+      "LF": 2,
+      "ELW1": 1,
+      "FUSTW": 1
     },
     "caption": "Brennende Trafostation"
   },
