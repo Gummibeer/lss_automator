@@ -2,8 +2,8 @@
   "LF": {
     "building_requirements": {},
     "vehicle_types": {
-      "KLF":  88,
-      "LF 10":  1,
+      "KLF": 88,
+      "LF 10": 1,
       "LF 20": 0
     }
   },
@@ -67,7 +67,9 @@
     "building_requirements": {
       "fire": 10
     },
-    "vehicle_types": {}
+    "vehicle_types": {
+      "GW-Messtechnik": 12
+    }
   },
   "GWH": {
     "building_requirements": {
