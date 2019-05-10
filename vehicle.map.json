@@ -55,6 +55,14 @@
       "GW-A": 5
     }
   },
+  "GWÖ": {
+    "building_requirements": {
+      "fire": 6
+    },
+    "vehicle_types": {
+      "GW-Öl": 10
+    }
+  },
   "GWM": {
     "building_requirements": {
       "fire": 10

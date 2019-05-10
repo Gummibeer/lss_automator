@@ -200,11 +200,33 @@
     },
     "caption": "Maschinenbrand"
   },
+  "30": {
+    "vehicles": {
+      "LF": 1,
+      "GWÖ": 1
+
+    },
+    "caption": "Große Ölspur"
+  },
   "31": {
     "vehicles": {
       "LF": 1
     },
     "caption": "Auslaufende Betriebsstoffe"
+  },
+  "32": {
+    "vehicles": {
+      "LF": 1,
+      "DLK": 1,
+      "ELW1": 1
+    },
+    "caption": "Auslaufende Betriebsstoffe"
+  },
+  "33": {
+    "vehicles": {
+      "LF": 2
+    },
+    "caption": "Mähdrescher Brand"
   },
   "34": {
     "vehicles": {
@@ -263,6 +285,12 @@
       "RW": 1
     },
     "caption": "Verkehrsunfall durch Glatteis"
+  },
+  "55": {
+    "vehicles": {
+      "LF": 1
+    },
+    "caption": "Brennender Tannenbaum"
   },
   "60": {
     "vehicles": {
@@ -409,6 +437,14 @@
     },
     "caption": "Feuer in Schnellrestaurant"
   },
+  "97": {
+    "vehicles": {
+      "LF": 3,
+      "ELW1": 1,
+      "GWÖ": 1
+    },
+    "caption": "Aufgerissener Öltank"
+  },
   "102": {
     "vehicles": {
       "LF": 3,
@@ -486,6 +522,21 @@
       "LF": 1,
       "RW": 1,
       "FUSTW": 1
+    },
+    "caption": "Verkehrsunfall"
+  },
+  "126": {
+    "vehicles": {
+      "LF": 2,
+      "RW": 1
+    },
+    "caption": "Verkehrsunfall"
+  },
+  "127": {
+    "vehicles": {
+      "FUSTW": 2,
+      "LF": 2,
+      "RW": 1
     },
     "caption": "Verkehrsunfall"
   },
@@ -599,6 +650,14 @@
       "LF": 1
     },
     "caption": "Baum auf PKW"
+  },
+  "163": {
+    "vehicles": {
+      "LF": 1,
+      "DLK": 1,
+      "FWK": 1
+    },
+    "caption": "Baum auf Dach"
   },
   "188": {
     "vehicles": {
