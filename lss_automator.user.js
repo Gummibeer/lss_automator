@@ -3,7 +3,7 @@
 // @description A userscript that automates missions
 // @namespace   https://www.leitstellenspiel.de
 // @include     https://www.leitstellenspiel.de/*
-// @version     0.1.46
+// @version     0.1.47
 // @author      Gummibeer
 // @license     MIT
 // @run-at      document-end
@@ -281,7 +281,8 @@ Array.prototype.toUpperCase = function () {
                                                         return false;
                                                     }
 
-                                                    return !$tr.find('input[type=checkbox].vehicle_checkbox').prop('checked');
+                                                    let $checkbox = $tr.find('input[type=checkbox].vehicle_checkbox');
+                                                    return !$checkbox.prop('checked') && !parseInt($checkbox.attr('ignore_aao'));
                                                 });
 
                                                 if ($trs.length === 0) {
